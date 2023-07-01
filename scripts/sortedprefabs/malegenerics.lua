@@ -82,7 +82,6 @@ return {
     "cave_fern",
     "charlie_heckler",
     "charlie_stage_post",
-    "chesspiece_hornucopia",
     "chester_eyebone",
     "clayhound",
     "claywarg",
