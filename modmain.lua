@@ -52,7 +52,7 @@ local function traverseSuffixes(table)
 end
 
 --[[
-  SUFFIXED_PREFABS table is filled with every prefab as a key and their corresponding table containing
+    SUFFIXED_PREFABS table is filled with every prefab as a key and their corresponding table containing
   their corresponding suffixes. For example:
   SUFFIXED_PREFABS =
   {
