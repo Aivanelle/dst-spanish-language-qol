@@ -78,3 +78,33 @@ if oldGetAdjectivedName then
     return name
   end
 end
+
+local TUNING = _G.TUNING
+local oldGetAdjective = EntityScript.GetAdjective
+
+if oldGetAdjective then
+  function EntityScript:GetAdjective(...)
+    if self.displayadjectivefn ~= nil then
+      return self:displayadjectivefn(self)
+    elseif self:HasTag("critter") then
+
+      for k,_ in pairs(TUNING.CRITTER_TRAITS) do
+        if self:HasTag("trait_"..k) then
+          return STRINGS.UI.HUD.CRITTER_TRAITS[k]
+        end
+      end
+
+    elseif self:HasTag("small_livestock") then
+      local upperPrefab = self.prefab:upper()
+
+      return not self:HasTag("sickness")
+        and ((self:HasTag("stale") and SUFFIXED_PREFABS[upperPrefab][CREATURE_HUNGRY_SUFFIX_KEY]) or
+            (self:HasTag("spoiled") and SUFFIXED_PREFABS[upperPrefab][CREATURE_STARVING_SUFFIX_KEY]))
+        or nil
+    elseif self:HasTag("stale") then
+      return self:HasTag("frozen") and STRINGS.UI.HUD.STALE_FROZEN or STRINGS.UI.HUD.STALE
+    elseif self:HasTag("spoiled") then
+      return self:HasTag("frozen") and STRINGS.UI.HUD.STALE_FROZEN or STRINGS.UI.HUD.SPOILED
+    end
+  end
+end
