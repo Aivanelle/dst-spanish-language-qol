@@ -1,10 +1,10 @@
 local Inv = require "widgets/inventorybar"
 
 function Inv:GetDescriptionString(item)
-  if item == nil then
-    return ""
-  end
+  if item == nil then return "" end
 
   local adjective = item:GetAdjective()
-  return adjective ~= nil and (item:GetDisplayName() .. " " .. adjective) or item:GetDisplayName()
+  local name = item:GetDisplayName()
+
+  return adjective ~= nil and (name .. " " .. adjective) or name
 end
