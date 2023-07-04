@@ -96,10 +96,12 @@ if oldGetAdjective then
 
     elseif self:HasTag("small_livestock") then
       local upperPrefab = self.prefab:upper()
+      local hungryAdjective = SUFFIXED_PREFABS[upperPrefab][CREATURE_HUNGRY_SUFFIX_KEY]
+      local starvingAdjective = SUFFIXED_PREFABS[upperPrefab][CREATURE_STARVING_SUFFIX_KEY]
 
       return not self:HasTag("sickness")
-        and ((self:HasTag("stale") and SUFFIXED_PREFABS[upperPrefab][CREATURE_HUNGRY_SUFFIX_KEY]) or
-            (self:HasTag("spoiled") and SUFFIXED_PREFABS[upperPrefab][CREATURE_STARVING_SUFFIX_KEY]))
+        and ((self:HasTag("stale") and hungryAdjective) or
+            (self:HasTag("spoiled") and starvingAdjective))
         or nil
     elseif self:HasTag("stale") then
       return self:HasTag("frozen") and STRINGS.UI.HUD.STALE_FROZEN or STRINGS.UI.HUD.STALE
