@@ -1,7 +1,7 @@
 return {
   SINGULAR =
   {
-    SUFFIX = STRINGS.WET_SUFFIX.CLOTHING.FEMALE.SINGULAR, -- Empapada.
+    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.CLOTHING.FEMALE.SINGULAR, -- Empapada.
 
     "fishingnet", -- Tool object.
     "handpillow_beefalowool", -- Tool object.
@@ -122,7 +122,7 @@ return {
 
   PLURAL =
   {
-    SUFFIX = STRINGS.WET_SUFFIX.CLOTHING.FEMALE.PLURAL, -- Empapadas.
+    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.CLOTHING.FEMALE.PLURAL, -- Empapadas.
 
     "carrot_oversized",
     "carrot_oversized_rotten",

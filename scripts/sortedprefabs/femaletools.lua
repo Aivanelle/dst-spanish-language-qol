@@ -1,7 +1,7 @@
 return {
   SINGULAR =
   {
-    SUFFIX = STRINGS.WET_SUFFIX.TOOL.FEMALE.SINGULAR, -- Resbaladiza.
+    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.TOOL.FEMALE.SINGULAR, -- Resbaladiza.
 
     "axe",
     "blowdart_fire",
@@ -53,7 +53,7 @@ return {
 
   PLURAL =
   {
-    SUFFIX = STRINGS.WET_SUFFIX.TOOL.FEMALE.PLURAL, -- Resbaladizas.
+    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.TOOL.FEMALE.PLURAL, -- Resbaladizas.
 
     "carnivalgame_feedchicks_food"
   }

@@ -1,7 +1,7 @@
 return {
   SINGULAR =
   {
-    SUFFIX = STRINGS.WET_SUFFIX.TOOL.MALE.SINGULAR, -- Resbaladizo
+    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.TOOL.MALE.SINGULAR, -- Resbaladizo
 
     "balloon",
     "balloonparty",
@@ -51,7 +51,7 @@ return {
     "yellowstaff"
   },
 
-  PLURAL =
+  [WET_SUFFIX_KEY] =
   {
     SUFFIX = STRINGS.WET_SUFFIX.TOOL.MALE.PLURAL -- Resbaladizos
   }

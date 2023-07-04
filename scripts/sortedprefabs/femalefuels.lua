@@ -1,7 +1,7 @@
 return {
   SINGULAR =
   {
-    SUFFIX = STRINGS.WET_SUFFIX.FUEL.FEMALE.SINGULAR, -- Mojada.
+    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.FUEL.FEMALE.SINGULAR, -- Mojada.
 
     "bathbomb",
     "beefalowool",
@@ -68,7 +68,7 @@ return {
 
   PLURAL =
   {
-    SUFFIX = STRINGS.WET_SUFFIX.FUEL.FEMALE.PLURAL, -- Mojadas.
+    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.FUEL.FEMALE.PLURAL, -- Mojadas.
 
     "dug_monkeytail",
     "fireflies",

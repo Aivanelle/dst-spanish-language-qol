@@ -1,7 +1,7 @@
 return {
   SINGULAR =
   {
-    SUFFIX = STRINGS.WET_SUFFIX.FOOD.FEMALE.SINGULAR, -- Remojada.
+    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.FOOD.FEMALE.SINGULAR, -- Remojada.
 
     "chum", -- Tool object.
 
@@ -198,7 +198,7 @@ return {
 
   PLURAL =
   {
-    SUFFIX = STRINGS.WET_SUFFIX.FOOD.FEMALE.PLURAL, -- Remojadas.
+    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.FOOD.FEMALE.PLURAL, -- Remojadas.
 
     "antchovies",
     "ash",
