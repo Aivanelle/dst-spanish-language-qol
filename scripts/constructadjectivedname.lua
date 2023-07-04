@@ -1,6 +1,6 @@
-local function lowercaseString(str)
-  return str:sub(1, 1) .. string.lower(str:sub(2))
-end
+-- local function lowercaseString(str)
+--   return str:sub(1, 1) .. string.lower(str:sub(2))
+-- end
 
 local function UsesPrefix(item)
   if type(item) == "string" then return USE_PREFIX[item] end
@@ -24,8 +24,12 @@ if _G.ConstructAdjectivedName then
       end
     end
 
+    if inst.prefab:find("wetgoop") then
+      return name:gsub(" ", " " .. adjective:lower() .. " ", 1)
+    end
+
     return usePrefix ~= false
       and (adjective .. " " .. name)
-      or (lowercaseString(name) .. " " .. adjective)
+      or (name .. " " .. adjective)
   end
 end
