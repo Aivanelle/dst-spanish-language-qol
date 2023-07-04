@@ -1,37 +1,12 @@
 _G = GLOBAL
+_G.WET_SUFFIX_KEY = "WET_SUFFIX"
+_G.WAXED_SUFFIX_KEY = "WAXED_SUFFIX"
+_G.CRETURE_HUNGRY_SUFFIX_KEY = "CREATURE_HUNGRY_SUFFIX"
+_G.CREATURE_STARVING_SUFFIX_KEY = "CREATURE_STARVING_SUFFIX"
+
 STRINGS = _G.STRINGS
-STRINGS.WET_SUFFIX =
-{
-  FOOD =
-  {
-    MALE    = { SINGULAR = "Remojado", PLURAL = "Remojados" },
-    FEMALE  = { SINGULAR = "Remojada", PLURAL = "Remojadas" }
-  },
 
-  CLOTHING =
-  {
-    MALE    = { SINGULAR = "Empapado", PLURAL = "Empapados" },
-    FEMALE  = { SINGULAR = "Empapada", PLURAL = "Empapadas" }
-  },
-
-  TOOL =
-  {
-    MALE    = { SINGULAR = "Resbaladizo", PLURAL = "Resbaladizos" },
-    FEMALE  = { SINGULAR = "Resbaladiza", PLURAL = "Resbaladizas" }
-  },
-
-  FUEL =
-  {
-    MALE    = { SINGULAR = "Mojado", PLURAL = "Mojados" },
-    FEMALE  = { SINGULAR = "Mojada", PLURAL = "Mojadas" }
-  },
-
-  GENERIC =
-  {
-    MALE    = { SINGULAR = "Húmedo", PLURAL = "Húmedos" },
-    FEMALE  = { SINGULAR = "Húmeda", PLURAL = "Húmedas" }
-  }
-}
+modimport("scripts/strings.lua")
 
 USE_PREFIX = _G.USE_PREFIX
 assert = _G.assert
@@ -39,10 +14,10 @@ assert = _G.assert
 --[[
   Traverse recursively the STRINGS.WET_SUFFIX suffixes table to set them as false in USE_PREFIX table.
 ]]
-local function traverseSuffixes(table)
+local function enableSuffixes(table)
   for k, v in pairs(table) do
-    if (type(v) == "table") then
-      traverseSuffixes(v)
+    if type(v) == "table" then
+      enableSuffixes(v)
     else
       assert(type(v) == "string", "Error, suffix string expected, got: " .. type(v))
 
@@ -50,6 +25,8 @@ local function traverseSuffixes(table)
     end
   end
 end
+
+enableSuffixes(STRINGS.WET_SUFFIX)
 
 --[[
     SUFFIXED_PREFABS table is filled with every prefab as a key and their corresponding table containing
@@ -75,17 +52,27 @@ end
   }
 ]]
 SUFFIXED_PREFABS = {}
-local function suffixPrefabs(sortedPrefabsTable)
-  -- GRAMMATICAL_NUMBER = Singular or plural.
-  for GRAMMATICAL_NUMBER, prefabs in pairs(sortedPrefabsTable) do
-    for _, prefab in ipairs(prefabs) do
-      local upperPrefab = prefab:upper()
+local function suffixPrefabs(sortedPrefabsTable, suffixKey)
+  for k, v in pairs(sortedPrefabsTable) do
+    if type(v) == "table" then
+      suffixPrefabs(v, suffixKey)
+    else
+      if type(k) == "number" then
+        local upperPrefab = v:upper()
+  
+        if type(SUFFIXED_PREFABS[upperPrefab]) ~= "table" then
+          SUFFIXED_PREFABS[upperPrefab] = {}
+        end
 
-      SUFFIXED_PREFABS[upperPrefab] = {}
-      SUFFIXED_PREFABS[upperPrefab].SUFFIX = sortedPrefabsTable[GRAMMATICAL_NUMBER].SUFFIX
+        SUFFIXED_PREFABS[upperPrefab][suffixKey] = sortedPrefabsTable[suffixKey]
+      end
     end
   end
 end
+
+WET_SUFFIX_KEY = _G.WET_SUFFIX_KEY
+WAXED_SUFFIX_KEY = _G.WAXED_SUFFIX_KEY
+CRETURE_SUFFIX_KEY = _G.CREATURE_SUFFIX_KEY
 
 local MALE_GENERICS = require("sortedprefabs/malegenerics")
 local FEMALE_GENERICS = require("sortedprefabs/femalegenerics")
@@ -97,17 +84,39 @@ local MALE_FUELS = require("sortedprefabs/malefuels")
 local FEMALE_FUELS = require("sortedprefabs/femalefuels")
 local MALE_FOODS = require("sortedprefabs/malefoods")
 local FEMALE_FOODS = require("sortedprefabs/femalefoods")
+local WAXED_VEGGIES = require("sortedprefabs/waxedveggies")
 
-suffixPrefabs(MALE_GENERICS)
-suffixPrefabs(FEMALE_GENERICS)
-suffixPrefabs(MALE_TOOLS)
-suffixPrefabs(FEMALE_TOOLS)
-suffixPrefabs(MALE_CLOTHINGS)
-suffixPrefabs(FEMALE_CLOTHINGS)
-suffixPrefabs(MALE_FUELS)
-suffixPrefabs(FEMALE_FUELS)
-suffixPrefabs(MALE_FOODS)
-suffixPrefabs(FEMALE_FOODS)
+suffixPrefabs(MALE_GENERICS, WET_SUFFIX_KEY)
+suffixPrefabs(FEMALE_GENERICS, WET_SUFFIX_KEY)
+suffixPrefabs(MALE_TOOLS, WET_SUFFIX_KEY)
+suffixPrefabs(FEMALE_TOOLS, WET_SUFFIX_KEY)
+suffixPrefabs(MALE_CLOTHINGS, WET_SUFFIX_KEY)
+suffixPrefabs(FEMALE_CLOTHINGS, WET_SUFFIX_KEY)
+suffixPrefabs(MALE_FUELS, WET_SUFFIX_KEY)
+suffixPrefabs(FEMALE_FUELS, WET_SUFFIX_KEY)
+suffixPrefabs(MALE_FOODS, WET_SUFFIX_KEY)
+suffixPrefabs(FEMALE_FOODS, WET_SUFFIX_KEY)
+suffixPrefabs(WAXED_VEGGIES, WAXED_SUFFIX_KEY)
+
+local function setDisplayAdjectiveFn(self)
+  self.displayadjectivefn = function()
+    return SUFFIXED_PREFABS[self.prefab:upper()][WAXED_SUFFIX_KEY]
+  end
+end
+
+local function modWaxedVeggies(veggiesTable)
+  for k, v in pairs(veggiesTable) do
+    if type(v) == "table" then
+      modWaxedVeggies(v)
+    else
+      if type(k) == "number" then
+        AddPrefabPostInit(v:lower(), setDisplayAdjectiveFn)        
+      end
+    end
+  end
+end
+
+modWaxedVeggies(WAXED_VEGGIES)
 
 local function setNoWetPrefix(prefab)
   if not prefab.no_wet_prefix then prefab.no_wet_prefix = true end
@@ -185,6 +194,9 @@ AddPrefabPostInit("carnivalgame_shooting_button", setNoWetPrefix)
 AddPrefabPostInit("carnivalgame_shooting_station", setNoWetPrefix)
 AddPrefabPostInit("carnivalgame_wheelspin_station", setNoWetPrefix)
 
-traverseSuffixes(STRINGS.WET_SUFFIX)
--- modimport("scripts/constructadjectivedname.lua")
+-- For some reason, this needs to be here in order to make it appear as a suffix.
+AddSimPostInit(function() USE_PREFIX[STRINGS.WET_PREFIX.RABBITHOLE] = false end)
+
+modimport("scripts/constructadjectivedname.lua")
 modimport("scripts/getadjectivedname.lua")
+modimport("scripts/widgets/hoverermod.lua")
