@@ -7,10 +7,9 @@ local ConstructAdjectivedName = _G.ConstructAdjectivedName
 
 if oldGetAdjectivedName then
   function EntityScript:GetAdjectivedName(...)
-    if self.components.named and self.components.named.name then
-      print("NPC con nombre propio.")
-    end
-    local name = self:GetBasicDisplayName() -- .. " (" .. self.prefab:upper() .. ")"
+    local name = self:GetBasicDisplayName()
+    local prefab = self.prefab
+    local isKitcoonNamed = self:HasTag("kitcoon") and (self.components.named and self.components.named.name)
 
     if self:HasTag("player") then
       return name
@@ -22,17 +21,24 @@ if oldGetAdjectivedName then
       return ConstructAdjectivedName(self, name, STRINGS.UI.HUD.SPOILED)
     elseif self:HasTag("withered") then
       return ConstructAdjectivedName(self, name, STRINGS.WITHEREDITEM)
-    elseif not self.no_wet_prefix and (self.always_wet_prefix or self:GetIsWet()) and not (self.components.named and self.components.named.name) then
+    elseif not self.no_wet_prefix and (self.always_wet_prefix or self:GetIsWet()) and not isKitcoonNamed then
       if self.wet_prefix ~= nil then
+        --[[
+            Rabbitholes changes its own wet suffix based in his collapsed state, since its not collapsed
+            suffix is declared in a local function, this has to be here.
+        ]]
+        if prefab == "rabbithole" and not self.iscollapsed:value() then
+          self.wet_prefix = STRINGS.WET_SUFFIX.GENERIC.MALE.SINGULAR
+        end
         return ConstructAdjectivedName(self, name, self.wet_prefix)
       end
 
-      local upperPrefab = self.prefab:upper()
+      local upperPrefab = prefab:upper()
       local suffix = nil
       local equippable = self.replica.equippable
 
       --[[
-          Since every prefab has already his suffix "attached" to it, the ifs and for statements
+          Since every prefab has already his suffix "attached" to it, the if and for statements
         of the original function now are useless, nonetheless I'm keeping them as some sort of
         debugging option ingame to be aware of any prefab that was not sorted.
           If some prefab was not sorted in any table, it will display ingame as something like
@@ -46,7 +52,7 @@ if oldGetAdjectivedName then
           suffix = "(" .. upperPrefab .. " CLOTHING?)"
         end
       end
-      
+
       for k, v in pairs(FOODTYPE) do
         if self:HasTag("edible_" .. v) and not suffix then
           suffix = "(" .. upperPrefab .. " FOOD?)"
@@ -63,8 +69,8 @@ if oldGetAdjectivedName then
 
       -- This is actually the important stuff.
       if type(SUFFIXED_PREFABS[upperPrefab]) == "table" then
-        assert(SUFFIXED_PREFABS[upperPrefab].SUFFIX, "Suffixed prefab table found but not suffix key for prefab '" .. self.prefab .. "'. Make sure you have a 'SUFFIX' key added to the proper table of grammatical number in scripts/sortedprefabs")
-        suffix = SUFFIXED_PREFABS[upperPrefab].SUFFIX
+        assert(SUFFIXED_PREFABS[upperPrefab][WET_SUFFIX_KEY], "Suffixed prefab table found but not suffix key for prefab '" .. self.prefab .. "'. Make sure you have a 'SUFFIX' key added to the proper table of grammatical number in scripts/sortedprefabs")
+        suffix = SUFFIXED_PREFABS[upperPrefab][WET_SUFFIX_KEY]
       end
 
       return ConstructAdjectivedName(self, name, suffix)
