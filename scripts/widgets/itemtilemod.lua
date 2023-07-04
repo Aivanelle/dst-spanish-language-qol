@@ -3,6 +3,7 @@ local CONTROL_FORCE_TRADE = _G.CONTROL_FORCE_TRADE
 local CONTROL_FORCE_STACK = _G.CONTROL_FORCE_STACK
 local CONTROL_PRIMARY = _G.CONTROL_PRIMARY
 local CONTROL_SECONDARY = _G.CONTROL_SECONDARY
+local next = _G.next
 local TheInput = _G.TheInput
 local ItemTile = require "widgets/itemtile"
 
@@ -11,9 +12,7 @@ function ItemTile:GetDescriptionString()
 
   if self.item ~= nil and self.item:IsValid() and self.item.replica.inventoryitem ~= nil then
     local adjective = self.item:GetAdjective()
-    if adjective ~= nil then
-      str = " " .. adjective
-    end
+    if adjective ~= nil then str = " " .. adjective end
 
     str = self.item:GetDisplayName() .. str
 
