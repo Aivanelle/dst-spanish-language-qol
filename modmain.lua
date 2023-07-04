@@ -1,7 +1,7 @@
 _G = GLOBAL
 _G.WET_SUFFIX_KEY = "WET_SUFFIX"
 _G.WAXED_SUFFIX_KEY = "WAXED_SUFFIX"
-_G.CRETURE_HUNGRY_SUFFIX_KEY = "CREATURE_HUNGRY_SUFFIX"
+_G.CREATURE_HUNGRY_SUFFIX_KEY = "CREATURE_HUNGRY_SUFFIX"
 _G.CREATURE_STARVING_SUFFIX_KEY = "CREATURE_STARVING_SUFFIX"
 
 STRINGS = _G.STRINGS
@@ -72,7 +72,8 @@ end
 
 WET_SUFFIX_KEY = _G.WET_SUFFIX_KEY
 WAXED_SUFFIX_KEY = _G.WAXED_SUFFIX_KEY
-CRETURE_SUFFIX_KEY = _G.CREATURE_SUFFIX_KEY
+CREATURE_HUNGRY_SUFFIX_KEY = _G.CREATURE_HUNGRY_SUFFIX_KEY
+CREATURE_STARVING_SUFFIX_KEY = _G.CREATURE_STARVING_SUFFIX_KEY
 
 local MALE_GENERICS = require("sortedprefabs/malegenerics")
 local FEMALE_GENERICS = require("sortedprefabs/femalegenerics")
@@ -85,6 +86,7 @@ local FEMALE_FUELS = require("sortedprefabs/femalefuels")
 local MALE_FOODS = require("sortedprefabs/malefoods")
 local FEMALE_FOODS = require("sortedprefabs/femalefoods")
 local WAXED_VEGGIES = require("sortedprefabs/waxedveggies")
+local INVENTORY_CREATURES = require("sortedprefabs/inventorycreatures")
 
 suffixPrefabs(MALE_GENERICS, WET_SUFFIX_KEY)
 suffixPrefabs(FEMALE_GENERICS, WET_SUFFIX_KEY)
@@ -97,6 +99,8 @@ suffixPrefabs(FEMALE_FUELS, WET_SUFFIX_KEY)
 suffixPrefabs(MALE_FOODS, WET_SUFFIX_KEY)
 suffixPrefabs(FEMALE_FOODS, WET_SUFFIX_KEY)
 suffixPrefabs(WAXED_VEGGIES, WAXED_SUFFIX_KEY)
+suffixPrefabs(INVENTORY_CREATURES, CREATURE_HUNGRY_SUFFIX_KEY)
+suffixPrefabs(INVENTORY_CREATURES, CREATURE_STARVING_SUFFIX_KEY)
 
 local function setDisplayAdjectiveFn(self)
   self.displayadjectivefn = function()
@@ -110,7 +114,7 @@ local function modWaxedVeggies(veggiesTable)
       modWaxedVeggies(v)
     else
       if type(k) == "number" then
-        AddPrefabPostInit(v:lower(), setDisplayAdjectiveFn)        
+        AddPrefabPostInit(v:lower(), setDisplayAdjectiveFn)
       end
     end
   end
@@ -198,5 +202,7 @@ AddPrefabPostInit("carnivalgame_wheelspin_station", setNoWetPrefix)
 AddSimPostInit(function() USE_PREFIX[STRINGS.WET_PREFIX.RABBITHOLE] = false end)
 
 modimport("scripts/constructadjectivedname.lua")
-modimport("scripts/getadjectivedname.lua")
+modimport("scripts/entityscriptmod.lua")
 modimport("scripts/widgets/hoverermod.lua")
+modimport("scripts/widgets/inventorybarmod.lua")
+modimport("scripts/widgets/itemtilemod.lua")
