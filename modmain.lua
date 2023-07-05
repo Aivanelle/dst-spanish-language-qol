@@ -208,8 +208,12 @@ AddPrefabPostInit("carnivalgame_shooting_button", setNoWetPrefix)
 AddPrefabPostInit("carnivalgame_shooting_station", setNoWetPrefix)
 AddPrefabPostInit("carnivalgame_wheelspin_station", setNoWetPrefix)
 
--- For some reason, this needs to be here in order to make it appear as a suffix.
-AddSimPostInit(function() USE_PREFIX[STRINGS.WET_PREFIX.RABBITHOLE] = false end)
+local function simPostInitFn()
+  USE_PREFIX[STRINGS.WET_PREFIX.RABBITHOLE] = false
+  USE_PREFIX[STRINGS.SMOLDERINGITEM] = false
+end
+
+AddSimPostInit(simPostInitFn)
 
 modimport("scripts/constructadjectivedname.lua")
 modimport("scripts/entityscriptmod.lua")
