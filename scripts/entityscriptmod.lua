@@ -94,9 +94,9 @@ if oldGetAdjective then
       return self:displayadjectivefn(self)
     elseif self:HasTag("critter") then
 
-      for k,_ in pairs(TUNING.CRITTER_TRAITS) do
-        if self:HasTag("trait_"..k) then
-          return STRINGS.UI.HUD.CRITTER_TRAITS[k]
+      for k, _ in pairs(TUNING.CRITTER_TRAITS) do
+        if self:HasTag("trait_" .. k) then
+          return SUFFIXED_PREFABS[upperPrefab][PET_TRAIT_SUFFIX_KEY[k:upper()]] or STRINGS.UI.HUD.CRITTER_TRAITS[k]
         end
       end
 
