@@ -1,3 +1,5 @@
+STRINGS.NAMES.BLUEPRINTMOD = "Planos para {item}"
+
 STRINGS.WET_SUFFIX =
 {
   FOOD =
