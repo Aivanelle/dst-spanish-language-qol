@@ -68,3 +68,18 @@ STRINGS.PERISHABLE_SUFFIX =
     FEMALE = { SINGULAR = "Caducada", PLURAL = "Caducadas" }
   }
 }
+
+STRINGS.PET_TRAIT_SUFFIX =
+{
+  COMBAT =
+  {
+    MALE = { SINGULAR = "Agresivo" },
+    FEMALE = { SINGULAR = "Agresiva" }
+  },
+
+  WELLFED =
+  {
+    MALE = { SINGULAR = "Regordete" },
+    FEMALE = { SINGULAR = "Regordeta" }
+  }
+}
