@@ -84,6 +84,8 @@ local oldGetAdjective = EntityScript.GetAdjective
 
 if oldGetAdjective then
   function EntityScript:GetAdjective(...)
+    local upperPrefab = self.prefab:upper()
+
     if self.displayadjectivefn ~= nil then
       return self:displayadjectivefn(self)
     elseif self:HasTag("critter") then
@@ -95,18 +97,19 @@ if oldGetAdjective then
       end
 
     elseif self:HasTag("small_livestock") then
-      local upperPrefab = self.prefab:upper()
-      local hungryAdjective = SUFFIXED_PREFABS[upperPrefab][CREATURE_HUNGRY_SUFFIX_KEY]
-      local starvingAdjective = SUFFIXED_PREFABS[upperPrefab][CREATURE_STARVING_SUFFIX_KEY]
+      local hungryAdjective = SUFFIXED_PREFABS[upperPrefab][CREATURE_HUNGRY_SUFFIX_KEY] or STRINGS.UI.HUD.HUNGRY
+      local starvingAdjective = SUFFIXED_PREFABS[upperPrefab][CREATURE_STARVING_SUFFIX_KEY] or STRINGS.UI.HUD.STARVING
 
-      return not self:HasTag("sickness")
-        and ((self:HasTag("stale") and hungryAdjective) or
-            (self:HasTag("spoiled") and starvingAdjective))
-        or nil
+      return not self:HasTag("sickness") and
+        ((self:HasTag("stale") and hungryAdjective) or (self:HasTag("spoiled") and starvingAdjective)) or nil
     elseif self:HasTag("stale") then
-      return self:HasTag("frozen") and STRINGS.UI.HUD.STALE_FROZEN or STRINGS.UI.HUD.STALE
+      local staleAdjective = SUFFIXED_PREFABS[upperPrefab][PERISHABLE_STALE_SUFFIX_KEY] or STRINGS.UI.HUD.STALE
+
+      return self:HasTag("frozen") and STRINGS.UI.HUD.STALE_FROZEN or staleAdjective
     elseif self:HasTag("spoiled") then
-      return self:HasTag("frozen") and STRINGS.UI.HUD.STALE_FROZEN or STRINGS.UI.HUD.SPOILED
+      local spoiledAdjective = SUFFIXED_PREFABS[upperPrefab][PERISHABLE_SPOILED_SUFFIX_KEY] or STRINGS.UI.HUD.SPOILED
+
+      return self:HasTag("frozen") and STRINGS.UI.HUD.STALE_FROZEN or spoiledAdjective
     end
   end
 end
