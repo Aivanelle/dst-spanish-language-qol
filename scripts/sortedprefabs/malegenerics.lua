@@ -311,6 +311,7 @@ return {
     "pigking",
     "pigshrine",
     "pinecone_sapling",
+    "plant_normal_ground",
     "pocketwatch_heal",
     "pocketwatch_portal",
     "pocketwatch_recall",
