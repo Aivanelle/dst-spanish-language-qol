@@ -232,6 +232,7 @@ return {
     "pighouse",
     "pigtorch",
     "pirate_flag_pole",
+    "plant_normal",
     "pocketwatch_portal_entrance",
     "pocketwatch_portal_exit",
     "portablecookpot",
