@@ -51,3 +51,18 @@ STRINGS.CREATURE_SUFFIX =
     FEMALE = { SINGULAR = "muy Hambrienta" }
   }
 }
+
+STRINGS.PERISHABLE_SUFFIX =
+{
+  STALE =
+  {
+    MALE = { SINGULAR = "Rancio", PLURAL = "Rancios" },
+    FEMALE = { SINGULAR = "Rancia", PLURAL = "Rancias" }
+  },
+
+  SPOILED =
+  {
+    MALE = { SINGULAR = "Caducado", PLURAL = "Caducados" },
+    FEMALE = { SINGULAR = "Caducada", PLURAL = "Caducadas" }
+  }
+}
