@@ -8,6 +8,7 @@ return {
     "blackflag",
     "carnivaldecor_figure_kit",
     "carnivaldecor_figure_kit_season2",
+    "cookingrecipecard",
     "compost",
     "compostwrap",
     "dug_grass",
