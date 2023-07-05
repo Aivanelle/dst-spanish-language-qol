@@ -63,8 +63,10 @@ return {
     "palmcone_seed",
     "papyrus",
     "poop",
+    "sketch",
     "stash_map",
     "steeringwheel_item",
+    "tacklesketch",
     "turf_carpetfloor",
     "turf_cave",
     "turf_checkerfloor",
@@ -120,6 +122,7 @@ return {
   {
     [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.FUEL.MALE.PLURAL, -- Mojados.
 
+    "blueprint",
     "carnival_prizeticket",
     "halloweenpotion_embers",
     "halloweenpotion_sparks",
