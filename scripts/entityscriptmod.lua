@@ -15,8 +15,12 @@ if oldGetAdjectivedName then
       return name
     elseif self:HasTag("smolder") then
       return ConstructAdjectivedName(self, name, STRINGS.SMOLDERINGITEM)
-    elseif self:HasTag("diseased") then
-      return ConstructAdjectivedName(self, name, STRINGS.DISEASEDITEM)
+    --[[
+      Deprecated feature.
+
+      elseif self:HasTag("diseased") then
+        return ConstructAdjectivedName(self, name, STRINGS.DISEASEDITEM)
+    ]]
     elseif self:HasTag("rotten") then
       return ConstructAdjectivedName(self, name, STRINGS.UI.HUD.SPOILED)
     elseif self:HasTag("withered") then
