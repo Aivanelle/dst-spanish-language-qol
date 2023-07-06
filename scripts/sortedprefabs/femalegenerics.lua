@@ -108,6 +108,7 @@ return {
     "gingerbreadhouse",
     "glommerflower",
     "grass",
+    "gravestone",
     "gravy",
     "greenmooneye",
     "gunpowder",
