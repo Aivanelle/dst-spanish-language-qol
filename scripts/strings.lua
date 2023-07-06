@@ -1,5 +1,34 @@
 STRINGS.NAMES.BLUEPRINTMOD = "Planos para {item}"
 
+STRINGS.SPICESMOD =
+{
+  SPICE_CHILI =
+  {
+    DRAGONCHILISALAD = "Ensalada Extrapicante de Dragón",
+    HOTCHILI = "Chile Extrapicante",
+
+    GENERIC = "{food} Picantes"
+  },
+
+  SPICE_SUGAR =
+  {
+    DRAGONCHILISALAD = "Ensalada Dulce de Dragón",
+    HOTCHILI = "Chile Dulce",
+
+    GENERIC = "{food} Dulces"
+  },
+
+  SPICE_SALT =
+  {
+    GENERIC = "{food} y Sal"
+  },
+
+  SPICE_GARLIC =
+  {
+    GENERIC = "{food} y Ajo"
+  }
+}
+
 STRINGS.WET_SUFFIX =
 {
   FOOD =
