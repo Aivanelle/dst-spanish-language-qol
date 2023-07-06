@@ -9,6 +9,7 @@ if oldGetAdjectivedName then
   function EntityScript:GetAdjectivedName(...)
     local name = self:GetBasicDisplayName()
     local prefab = self.prefab
+    local upperPrefab = prefab:upper()
     local isKitcoonNamed = self:HasTag("kitcoon") and (self.components.named and self.components.named.name)
 
     if self:HasTag("player") then
@@ -24,7 +25,9 @@ if oldGetAdjectivedName then
     elseif self:HasTag("rotten") then
       return ConstructAdjectivedName(self, name, STRINGS.UI.HUD.SPOILED)
     elseif self:HasTag("withered") then
-      return ConstructAdjectivedName(self, name, STRINGS.WITHEREDITEM)
+      local witheredSuffix = SUFFIXED_PREFABS[upperPrefab][ WITHERED_SUFFIX_KEY] or STRINGS.WITHEREDITEM
+
+      return ConstructAdjectivedName(self, name, witheredSuffix)
     elseif not self.no_wet_prefix and (self.always_wet_prefix or self:GetIsWet()) and not isKitcoonNamed then
       if self.wet_prefix ~= nil then
         --[[
@@ -34,10 +37,10 @@ if oldGetAdjectivedName then
         if prefab == "rabbithole" and not self.iscollapsed:value() then
           self.wet_prefix = STRINGS.WET_SUFFIX.GENERIC.MALE.SINGULAR
         end
+
         return ConstructAdjectivedName(self, name, self.wet_prefix)
       end
 
-      local upperPrefab = prefab:upper()
       local suffix = nil
       local equippable = self.replica.equippable
 
