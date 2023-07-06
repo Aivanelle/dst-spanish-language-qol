@@ -263,7 +263,7 @@ end
 
 AddSimPostInit(simPostInitFn)
 
-modimport("scripts/constructadjectivedname.lua")
+modimport("scripts/dlcsupport_stringsmod.lua")
 modimport("scripts/entityscriptmod.lua")
 modimport("scripts/widgets/hoverermod.lua")
 modimport("scripts/widgets/inventorybarmod.lua")
