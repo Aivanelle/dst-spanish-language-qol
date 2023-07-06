@@ -11,6 +11,7 @@ if oldGetAdjectivedName then
     local prefab = self.prefab
     local upperPrefab = prefab:upper()
     local isKitcoonNamed = self:HasTag("kitcoon") and (self.components.named and self.components.named.name)
+    local isBeefaloNamed = prefab == "beefalo" and (self.components.named and self.components.named.name)
 
     if self:HasTag("player") then
       return name
@@ -28,7 +29,7 @@ if oldGetAdjectivedName then
       local witheredSuffix = SUFFIXED_PREFABS[upperPrefab][ WITHERED_SUFFIX_KEY] or STRINGS.WITHEREDITEM
 
       return ConstructAdjectivedName(self, name, witheredSuffix)
-    elseif not self.no_wet_prefix and (self.always_wet_prefix or self:GetIsWet()) and not isKitcoonNamed then
+    elseif not self.no_wet_prefix and (self.always_wet_prefix or self:GetIsWet()) and not isKitcoonNamed and not isBeefaloNamed then
       if self.wet_prefix ~= nil then
         --[[
             Rabbitholes changes its own wet suffix based in his collapsed state, since its not collapsed
