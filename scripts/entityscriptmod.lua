@@ -35,7 +35,7 @@ if oldGetAdjectivedName then
             suffix is declared in a local function, this has to be here.
         ]]
         if prefab == "rabbithole" and not self.iscollapsed:value() then
-          self.wet_prefix = STRINGS.WET_SUFFIX.GENERIC.MALE.SINGULAR
+          self.wet_prefix = SUFFIXED_PREFABS[upperPrefab][WET_SUFFIX_KEY]
         end
 
         return ConstructAdjectivedName(self, name, self.wet_prefix)
