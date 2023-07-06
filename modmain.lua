@@ -5,16 +5,14 @@ _G.CREATURE_HUNGRY_SUFFIX_KEY = "CREATURE_HUNGRY_SUFFIX"
 _G.CREATURE_STARVING_SUFFIX_KEY = "CREATURE_STARVING_SUFFIX"
 _G.PERISHABLE_STALE_SUFFIX_KEY = "PERISHABLE_STALE_SUFFIX"
 _G.PERISHABLE_SPOILED_SUFFIX_KEY = "PERISHABLE_SPOILED_SUFFIX"
+_G.WITHERED_SUFFIX_KEY = "WITHERED_SUFFIX"
 _G.PET_TRAIT_SUFFIX_KEY =
 {
   COMBAT = "PET_TRAIT_COMBAT_SUFFIX",
   WELLFED = "PET_TRAIT_WELLFED_SUFFIX"
 }
 
-print(type(_G.PET_TRAIT_SUFFIX_KEY))
-
 STRINGS = _G.STRINGS
-
 modimport("scripts/strings.lua")
 
 USE_PREFIX = _G.USE_PREFIX
@@ -36,6 +34,7 @@ local function enableSuffixes(table)
 end
 
 enableSuffixes(STRINGS.WET_SUFFIX)
+enableSuffixes(STRINGS.WITHERED_SUFFIX)
 
 --[[
     SUFFIXED_PREFABS table is filled with every prefab as a key and their corresponding table containing
@@ -86,6 +85,7 @@ CREATURE_STARVING_SUFFIX_KEY = _G.CREATURE_STARVING_SUFFIX_KEY
 PERISHABLE_STALE_SUFFIX_KEY = _G.PERISHABLE_STALE_SUFFIX_KEY
 PERISHABLE_SPOILED_SUFFIX_KEY = _G.PERISHABLE_SPOILED_SUFFIX_KEY
 PET_TRAIT_SUFFIX_KEY = _G.PET_TRAIT_SUFFIX_KEY
+WITHERED_SUFFIX_KEY = _G.WITHERED_SUFFIX_KEY
 
 local MALE_GENERICS = require("sortedprefabs/malegenerics")
 local FEMALE_GENERICS = require("sortedprefabs/femalegenerics")
@@ -102,6 +102,7 @@ local FEMALE_PERISHABLES = require("sortedprefabs/femaleperishables")
 local WAXED_VEGGIES = require("sortedprefabs/waxedveggies")
 local INVENTORY_CREATURES = require("sortedprefabs/inventorycreatures")
 local PETS = require("sortedprefabs/pets")
+local WITHERABLES = require("sortedprefabs/witherables")
 
 suffixPrefabs(MALE_GENERICS, WET_SUFFIX_KEY)
 suffixPrefabs(FEMALE_GENERICS, WET_SUFFIX_KEY)
@@ -122,6 +123,7 @@ suffixPrefabs(INVENTORY_CREATURES, CREATURE_HUNGRY_SUFFIX_KEY)
 suffixPrefabs(INVENTORY_CREATURES, CREATURE_STARVING_SUFFIX_KEY)
 suffixPrefabs(PETS, PET_TRAIT_SUFFIX_KEY.COMBAT)
 suffixPrefabs(PETS, PET_TRAIT_SUFFIX_KEY.WELLFED)
+suffixPrefabs(WITHERABLES, WITHERED_SUFFIX_KEY)
 
 local function setDisplayAdjectiveFn(self)
   self.displayadjectivefn = function()
@@ -218,6 +220,41 @@ AddPrefabPostInit("carnivalgame_puckdrop_station", setNoWetPrefix)
 AddPrefabPostInit("carnivalgame_shooting_button", setNoWetPrefix)
 AddPrefabPostInit("carnivalgame_shooting_station", setNoWetPrefix)
 AddPrefabPostInit("carnivalgame_wheelspin_station", setNoWetPrefix)
+
+local subfmt = _G.subfmt
+
+local function setSpiceDisplayName(self)
+  self.displaynamefn = function()
+    local spice = nil
+
+    if self.components.edible and self.components.edible.spice then
+      spice = self.components.edible.spice
+    end
+
+    local upperNameOverride = self.nameoverride:upper()
+
+    return STRINGS.SPICESMOD[spice][upperNameOverride] or subfmt(STRINGS.SPICESMOD[spice].GENERIC, { food = STRINGS.NAMES[upperNameOverride] })
+  end
+end
+
+AddPrefabPostInit("baconeggs_spice_chili", setSpiceDisplayName)
+AddPrefabPostInit("baconeggs_spice_salt", setSpiceDisplayName)
+AddPrefabPostInit("baconeggs_spice_garlic", setSpiceDisplayName)
+AddPrefabPostInit("baconeggs_spice_sugar", setSpiceDisplayName)
+AddPrefabPostInit("dragonchilisalad_spice_chili", setSpiceDisplayName)
+AddPrefabPostInit("dragonchilisalad_spice_sugar", setSpiceDisplayName)
+AddPrefabPostInit("hotchili_spice_chili", setSpiceDisplayName)
+AddPrefabPostInit("hotchili_spice_sugar", setSpiceDisplayName)
+AddPrefabPostInit("leafloaf_spice_salt", setSpiceDisplayName)
+AddPrefabPostInit("leafloaf_spice_garlic", setSpiceDisplayName)
+
+local function setBlueprintDisplayName(self)
+  self.displaynamefn = function()
+    return subfmt(STRINGS.NAMES.BLUEPRINTMOD, { item = STRINGS.NAMES[self.recipetouse:upper()] or STRINGS.NAMES.UNKNOWN })
+  end
+end
+
+AddPrefabPostInit("blueprint", setBlueprintDisplayName)
 
 local function simPostInitFn()
   USE_PREFIX[STRINGS.WET_PREFIX.RABBITHOLE] = false
