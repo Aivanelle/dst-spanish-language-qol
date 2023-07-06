@@ -36,6 +36,8 @@ end
 enableSuffixes(STRINGS.WET_SUFFIX)
 enableSuffixes(STRINGS.WITHERED_SUFFIX)
 
+unpack = _G.unpack
+
 --[[
     SUFFIXED_PREFABS table is filled with every prefab as a key and their corresponding table containing
   their corresponding suffixes. For example:
@@ -60,10 +62,10 @@ enableSuffixes(STRINGS.WITHERED_SUFFIX)
   }
 ]]
 SUFFIXED_PREFABS = {}
-local function suffixPrefabs(sortedPrefabsTable, suffixKey)
+local function suffixPrefabs(sortedPrefabsTable, ...)
   for k, v in pairs(sortedPrefabsTable) do
     if type(v) == "table" then
-      suffixPrefabs(v, suffixKey)
+      suffixPrefabs(v, unpack(arg))
     else
       if type(k) == "number" then
         local upperPrefab = v:upper()
@@ -72,7 +74,9 @@ local function suffixPrefabs(sortedPrefabsTable, suffixKey)
           SUFFIXED_PREFABS[upperPrefab] = {}
         end
 
-        SUFFIXED_PREFABS[upperPrefab][suffixKey] = sortedPrefabsTable[suffixKey]
+        for _, suffixKey in ipairs(arg) do
+          SUFFIXED_PREFABS[upperPrefab][suffixKey] = sortedPrefabsTable[suffixKey]
+        end
       end
     end
   end
@@ -114,15 +118,11 @@ suffixPrefabs(MALE_FUELS, WET_SUFFIX_KEY)
 suffixPrefabs(FEMALE_FUELS, WET_SUFFIX_KEY)
 suffixPrefabs(MALE_FOODS, WET_SUFFIX_KEY)
 suffixPrefabs(FEMALE_FOODS, WET_SUFFIX_KEY)
-suffixPrefabs(MALE_PERISHABLES, PERISHABLE_STALE_SUFFIX_KEY)
-suffixPrefabs(MALE_PERISHABLES, PERISHABLE_SPOILED_SUFFIX_KEY)
-suffixPrefabs(FEMALE_PERISHABLES, PERISHABLE_STALE_SUFFIX_KEY)
-suffixPrefabs(FEMALE_PERISHABLES, PERISHABLE_SPOILED_SUFFIX_KEY)
+suffixPrefabs(MALE_PERISHABLES, PERISHABLE_STALE_SUFFIX_KEY, PERISHABLE_SPOILED_SUFFIX_KEY)
+suffixPrefabs(FEMALE_PERISHABLES, PERISHABLE_STALE_SUFFIX_KEY, PERISHABLE_SPOILED_SUFFIX_KEY)
 suffixPrefabs(WAXED_VEGGIES, WAXED_SUFFIX_KEY)
-suffixPrefabs(INVENTORY_CREATURES, CREATURE_HUNGRY_SUFFIX_KEY)
-suffixPrefabs(INVENTORY_CREATURES, CREATURE_STARVING_SUFFIX_KEY)
-suffixPrefabs(PETS, PET_TRAIT_SUFFIX_KEY.COMBAT)
-suffixPrefabs(PETS, PET_TRAIT_SUFFIX_KEY.WELLFED)
+suffixPrefabs(INVENTORY_CREATURES, CREATURE_HUNGRY_SUFFIX_KEY, CREATURE_STARVING_SUFFIX_KEY)
+suffixPrefabs(PETS, PET_TRAIT_SUFFIX_KEY.COMBAT, PET_TRAIT_SUFFIX_KEY.WELLFED)
 suffixPrefabs(WITHERABLES, WITHERED_SUFFIX_KEY)
 
 local function setDisplayAdjectiveFn(self)
