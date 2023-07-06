@@ -83,3 +83,9 @@ STRINGS.PET_TRAIT_SUFFIX =
     FEMALE = { SINGULAR = "Regordeta" }
   }
 }
+
+STRINGS.WITHERED_SUFFIX =
+{
+  MALE = { SINGULAR = "Marchito" },
+  FEMALE = { SINGULAR = "Marchita", PLURAL = "Marchitas" }
+}
