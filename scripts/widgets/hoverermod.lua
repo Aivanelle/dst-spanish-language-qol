@@ -5,7 +5,6 @@ local CONTROL_SECONDARY = _G.CONTROL_SECONDARY
 local WET_TEXT_COLOUR = _G.WET_TEXT_COLOUR
 local NORMAL_TEXT_COLOUR = _G.NORMAL_TEXT_COLOUR
 local TheInput = _G.TheInput
-local unpack = _G.unpack
 local ProfileStatsSet = _G.ProfileStatsSet
 local HoverText = require "widgets/hoverer"
 
