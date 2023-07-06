@@ -427,6 +427,7 @@ return {
     "sandblock",
     "sanityrock",
     "sapling",
+    "sapling_moon",
     "scarecrow",
     "scorched_skeleton",
     "sculptingtable",
