@@ -8,12 +8,12 @@ local ConstructAdjectivedName = _G.ConstructAdjectivedName
 if oldGetAdjectivedName then
   function EntityScript:GetAdjectivedName(...)
     local name = self:GetBasicDisplayName()
-    local prefab = self.prefab
-    local upperPrefab = prefab:upper()
+    local prefab = self.prefab or self.nameoverride
+    local upperPrefab = prefab and prefab:upper()
     local isKitcoonNamed = self:HasTag("kitcoon") and (self.components.named and self.components.named.name)
     local isBeefaloNamed = prefab == "beefalo" and (self.components.named and self.components.named.name)
 
-    if self:HasTag("player") then
+    if self:HasTag("player") or not prefab then
       return name
     elseif self:HasTag("smolder") then
       return ConstructAdjectivedName(self, name, STRINGS.SMOLDERINGITEM)
@@ -26,7 +26,7 @@ if oldGetAdjectivedName then
     elseif self:HasTag("rotten") then
       return ConstructAdjectivedName(self, name, STRINGS.UI.HUD.SPOILED)
     elseif self:HasTag("withered") then
-      local witheredSuffix = SUFFIXED_PREFABS[upperPrefab][ WITHERED_SUFFIX_KEY] or STRINGS.WITHEREDITEM
+      local witheredSuffix = SUFFIXED_PREFABS[upperPrefab][WITHERED_SUFFIX_KEY] or STRINGS.WITHEREDITEM
 
       return ConstructAdjectivedName(self, name, witheredSuffix)
     elseif not self.no_wet_prefix and (self.always_wet_prefix or self:GetIsWet()) and not isKitcoonNamed and not isBeefaloNamed then
@@ -92,7 +92,9 @@ local oldGetAdjective = EntityScript.GetAdjective
 
 if oldGetAdjective then
   function EntityScript:GetAdjective(...)
-    local upperPrefab = self.prefab:upper()
+    local prefab = self.prefab or self.nameoverride
+    local upperPrefab = prefab and prefab:upper()
+    local SUFFIXES = SUFFIXED_PREFABS[upperPrefab]
 
     if self.displayadjectivefn ~= nil then
       return self:displayadjectivefn(self)
@@ -100,22 +102,22 @@ if oldGetAdjective then
 
       for k, _ in pairs(TUNING.CRITTER_TRAITS) do
         if self:HasTag("trait_" .. k) then
-          return SUFFIXED_PREFABS[upperPrefab][PET_TRAIT_SUFFIX_KEY[k:upper()]] or STRINGS.UI.HUD.CRITTER_TRAITS[k]
+          return (SUFFIXES and SUFFIXES[PET_TRAIT_SUFFIX_KEY[k]]) or STRINGS.UI.HUD.CRITTER_TRAITS[k]
         end
       end
 
     elseif self:HasTag("small_livestock") then
-      local hungryAdjective = SUFFIXED_PREFABS[upperPrefab][CREATURE_HUNGRY_SUFFIX_KEY] or STRINGS.UI.HUD.HUNGRY
-      local starvingAdjective = SUFFIXED_PREFABS[upperPrefab][CREATURE_STARVING_SUFFIX_KEY] or STRINGS.UI.HUD.STARVING
+      local hungryAdjective = (SUFFIXES and SUFFIXES[CREATURE_HUNGRY_SUFFIX_KEY]) or STRINGS.UI.HUD.HUNGRY
+      local starvingAdjective = (SUFFIXES and SUFFIXES[CREATURE_STARVING_SUFFIX_KEY]) or STRINGS.UI.HUD.STARVING
 
       return not self:HasTag("sickness") and
         ((self:HasTag("stale") and hungryAdjective) or (self:HasTag("spoiled") and starvingAdjective)) or nil
     elseif self:HasTag("stale") then
-      local staleAdjective = SUFFIXED_PREFABS[upperPrefab][PERISHABLE_STALE_SUFFIX_KEY] or STRINGS.UI.HUD.STALE
+      local staleAdjective = (SUFFIXES and SUFFIXES[PERISHABLE_STALE_SUFFIX_KEY]) or STRINGS.UI.HUD.STALE
 
       return self:HasTag("frozen") and STRINGS.UI.HUD.STALE_FROZEN or staleAdjective
     elseif self:HasTag("spoiled") then
-      local spoiledAdjective = SUFFIXED_PREFABS[upperPrefab][PERISHABLE_SPOILED_SUFFIX_KEY] or STRINGS.UI.HUD.SPOILED
+      local spoiledAdjective = (SUFFIXES and SUFFIXES[PERISHABLE_SPOILED_SUFFIX_KEY]) or STRINGS.UI.HUD.SPOILED
 
       return self:HasTag("frozen") and STRINGS.UI.HUD.STALE_FROZEN or spoiledAdjective
     end
