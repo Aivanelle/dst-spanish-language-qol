@@ -33,12 +33,7 @@ local function enableSuffixes(table)
   end
 end
 
-enableSuffixes(STRINGS.WET_SUFFIX)
-enableSuffixes(STRINGS.WITHERED_SUFFIX)
-enableSuffixes(STRINGS.PERISHABLE_SUFFIX)
-enableSuffixes(STRINGS.CREATURE_SUFFIX)
-enableSuffixes(STRINGS.WAXED_SUFFIX)
-enableSuffixes(STRINGS.PET_TRAIT_SUFFIX)
+enableSuffixes(STRINGS.SUFFIX)
 
 unpack = _G.unpack
 
@@ -229,12 +224,7 @@ local subfmt = _G.subfmt
 
 local function setSpiceDisplayName(self)
   self.displaynamefn = function()
-    local spice = nil
-
-    if self.components.edible and self.components.edible.spice then
-      spice = self.components.edible.spice
-    end
-
+    local spice = self.components.edible and self.components.edible.spice
     local upperNameOverride = self.nameoverride:upper()
 
     return STRINGS.SPICESMOD[spice][upperNameOverride] or subfmt(STRINGS.SPICESMOD[spice].GENERIC, { food = STRINGS.NAMES[upperNameOverride] })
@@ -275,7 +265,6 @@ end
 
 AddSimPostInit(simPostInitFn)
 
-modimport("scripts/dlcsupport_stringsmod.lua")
 modimport("scripts/entityscriptmod.lua")
 modimport("scripts/widgets/hoverermod.lua")
 modimport("scripts/widgets/inventorybarmod.lua")
