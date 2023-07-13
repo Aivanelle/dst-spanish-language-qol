@@ -23,7 +23,9 @@ return {
 
       "critter_lamb",
       "critter_dragonling",
-      "critter_lunarmothling"
+      "critter_lunarmothling",
+      "wobybig",
+      "wobysmall"
     }
   }
 }
