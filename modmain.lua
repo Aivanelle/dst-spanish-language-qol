@@ -15,7 +15,7 @@ _G.PET_TRAIT_SUFFIX_KEY =
 STRINGS = _G.STRINGS
 modimport("scripts/strings.lua")
 
-USE_PREFIX = _G.USE_PREFIX
+local USE_PREFIX = _G.USE_PREFIX
 assert = _G.assert
 
 --[[
@@ -35,7 +35,7 @@ end
 
 enableSuffixes(STRINGS.SUFFIX)
 
-unpack = _G.unpack
+local unpack = _G.unpack
 
 --[[
     SUFFIXED_PREFABS table is filled with every prefab as a key and their corresponding table containing
@@ -195,6 +195,8 @@ local function simPostInitFn()
 end
 
 AddSimPostInit(simPostInitFn)
+
+ConstructAdjectivedName = _G.ConstructAdjectivedName
 
 modimport("scripts/entityscriptmod.lua")
 modimport("scripts/widgets/hoverermod.lua")
