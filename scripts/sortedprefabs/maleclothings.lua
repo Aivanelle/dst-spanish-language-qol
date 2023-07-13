@@ -1,7 +1,7 @@
 return {
   SINGULAR =
   {
-    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.CLOTHING.MALE.SINGULAR, -- Empapado.
+    [WET_SUFFIX_KEY] = STRINGS.SUFFIX.WET.CLOTHING.MALE.SINGULAR, -- Empapado.
 
     "amulet",
     "antlionhat",
@@ -92,6 +92,6 @@ return {
 
   PLURAL =
   {
-    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.CLOTHING.MALE.PLURAL -- Empapados.
+    [WET_SUFFIX_KEY] = STRINGS.SUFFIX.WET.CLOTHING.MALE.PLURAL -- Empapados.
   }
 }

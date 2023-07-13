@@ -1,7 +1,7 @@
 return {
   SINGULAR =
   {
-    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.GENERIC.FEMALE.SINGULAR, -- Húmeda
+    [WET_SUFFIX_KEY] = STRINGS.SUFFIX.WET.GENERIC.FEMALE.SINGULAR, -- Húmeda
 
     "abigail_flower",
     "adventure_portal",
@@ -504,7 +504,7 @@ return {
 
   PLURAL =
   {
-    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.GENERIC.FEMALE.PLURAL, -- Húmedas
+    [WET_SUFFIX_KEY] = STRINGS.SUFFIX.WET.GENERIC.FEMALE.PLURAL, -- Húmedas
 
     "animal_track",
     "cave_exit",

@@ -1,7 +1,7 @@
 return {
   SINGULAR =
   {
-    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.FOOD.MALE.SINGULAR, -- Remojado.
+    [WET_SUFFIX_KEY] = STRINGS.SUFFIX.WET.FOOD.MALE.SINGULAR, -- Remojado.
 
     "bananajuice",
     "bananajuice_spice_chili",
@@ -301,7 +301,7 @@ return {
 
   PLURAL =
   {
-    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.FOOD.MALE.PLURAL, -- Remojados.
+    [WET_SUFFIX_KEY] = STRINGS.SUFFIX.WET.FOOD.MALE.PLURAL, -- Remojados.
 
     "asparagus",
     "asparagus_cooked",

@@ -1,7 +1,7 @@
 return {
   SINGULAR =
   {
-    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.FUEL.MALE.SINGULAR, -- Mojado.
+    [WET_SUFFIX_KEY] = STRINGS.SUFFIX.WET.FUEL.MALE.SINGULAR, -- Mojado.
 
     "anchor_item",
     "beardhair",
@@ -120,7 +120,7 @@ return {
 
   PLURAL =
   {
-    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.FUEL.MALE.PLURAL, -- Mojados.
+    [WET_SUFFIX_KEY] = STRINGS.SUFFIX.WET.FUEL.MALE.PLURAL, -- Mojados.
 
     "blueprint",
     "carnival_prizeticket",

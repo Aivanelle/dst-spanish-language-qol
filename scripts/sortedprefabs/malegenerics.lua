@@ -1,7 +1,7 @@
 return {
   SINGULAR =
   {
-    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.GENERIC.MALE.SINGULAR, -- Húmedo
+    [WET_SUFFIX_KEY] = STRINGS.SUFFIX.WET.GENERIC.MALE.SINGULAR, -- Húmedo
 
     "acorn_sapling",
     "alterguardian_contained",
@@ -646,7 +646,7 @@ return {
 
   PLURAL =
   {
-    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.GENERIC.MALE.PLURAL, -- Húmedos
+    [WET_SUFFIX_KEY] = STRINGS.SUFFIX.WET.GENERIC.MALE.PLURAL, -- Húmedos
 
     "balloons_empty",
     "blowdart_lava",
