@@ -35,6 +35,10 @@ end
 
 enableSuffixes(STRINGS.WET_SUFFIX)
 enableSuffixes(STRINGS.WITHERED_SUFFIX)
+enableSuffixes(STRINGS.PERISHABLE_SUFFIX)
+enableSuffixes(STRINGS.CREATURE_SUFFIX)
+enableSuffixes(STRINGS.WAXED_SUFFIX)
+enableSuffixes(STRINGS.PET_TRAIT_SUFFIX)
 
 unpack = _G.unpack
 
@@ -259,6 +263,14 @@ AddPrefabPostInit("blueprint", setBlueprintDisplayName)
 local function simPostInitFn()
   USE_PREFIX[STRINGS.WET_PREFIX.RABBITHOLE] = false
   USE_PREFIX[STRINGS.SMOLDERINGITEM] = false
+
+  USE_PREFIX[STRINGS.WET_PREFIX.WETGOOP] = function(inst, name, adjective)
+    if inst.prefab:find("wetgoop") then
+      local wetWetgoopName = STRINGS.NAMES.WETGOOP:gsub(" ", " " .. adjective:lower() .. " ")
+
+      return name:gsub(STRINGS.NAMES.WETGOOP, wetWetgoopName)
+    end
+  end
 end
 
 AddSimPostInit(simPostInitFn)
