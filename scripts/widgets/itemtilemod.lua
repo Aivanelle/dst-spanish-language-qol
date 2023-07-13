@@ -1,6 +1,5 @@
 local ItemTile = require "widgets/itemtile"
 local GetOriginalDescriptionString = ItemTile.GetDescriptionString or function() return "" end
-local ConstructAdjectivedName = _G.ConstructAdjectivedName
 
 function ItemTile:GetDescriptionString()
   local str = GetOriginalDescriptionString(self)

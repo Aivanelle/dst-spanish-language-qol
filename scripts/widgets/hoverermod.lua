@@ -1,6 +1,5 @@
 local HoverText = require "widgets/hoverer"
 local OnUpdateOriginal = HoverText.OnUpdate or function() return "" end
-local ConstructAdjectivedName = _G.ConstructAdjectivedName
 
 function HoverText:OnUpdate()
   OnUpdateOriginal(self)
