@@ -3,8 +3,8 @@ return {
   {
     SINGULAR =
     {
-      [PET_TRAIT_SUFFIX_KEY.COMBAT] = STRINGS.PET_TRAIT_SUFFIX.COMBAT.MALE.SINGULAR, -- Agresivo.
-      [PET_TRAIT_SUFFIX_KEY.WELLFED] = STRINGS.PET_TRAIT_SUFFIX.WELLFED.MALE.SINGULAR, -- Regordete.
+      [PET_TRAIT_SUFFIX_KEY.COMBAT] = STRINGS.SUFFIX.PET_TRAIT.COMBAT.MALE.SINGULAR, -- Agresivo.
+      [PET_TRAIT_SUFFIX_KEY.WELLFED] = STRINGS.SUFFIX.PET_TRAIT.WELLFED.MALE.SINGULAR, -- Regordete.
 
       "critter_puppy",
       "critter_kitten",
@@ -18,12 +18,14 @@ return {
   {
     SINGULAR =
     {
-      [PET_TRAIT_SUFFIX_KEY.COMBAT] = STRINGS.PET_TRAIT_SUFFIX.COMBAT.FEMALE.SINGULAR, -- Agresiva.
-      [PET_TRAIT_SUFFIX_KEY.WELLFED] = STRINGS.PET_TRAIT_SUFFIX.WELLFED.FEMALE.SINGULAR, -- Regordeta.
+      [PET_TRAIT_SUFFIX_KEY.COMBAT] = STRINGS.SUFFIX.PET_TRAIT.COMBAT.FEMALE.SINGULAR, -- Agresiva.
+      [PET_TRAIT_SUFFIX_KEY.WELLFED] = STRINGS.SUFFIX.PET_TRAIT.WELLFED.FEMALE.SINGULAR, -- Regordeta.
 
       "critter_lamb",
       "critter_dragonling",
-      "critter_lunarmothling"
+      "critter_lunarmothling",
+      "wobybig",
+      "wobysmall"
     }
   }
 }

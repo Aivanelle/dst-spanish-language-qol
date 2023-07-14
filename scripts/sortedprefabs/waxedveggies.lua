@@ -3,7 +3,7 @@ return {
   {
     SINGULAR =
     {
-      [WAXED_SUFFIX_KEY] = STRINGS.WAXED_SUFFIX.MALE.SINGULAR, -- Emcerado.
+      [WAXED_SUFFIX_KEY] = STRINGS.SUFFIX.WAXED.MALE.SINGULAR, -- Emcerado.
 
       "asparagus_oversized_waxed",
       "corn_oversized_waxed",
@@ -15,7 +15,7 @@ return {
 
     PLURAL =
     {
-      [WAXED_SUFFIX_KEY] = STRINGS.WAXED_SUFFIX.MALE.PLURAL -- Encerados.
+      [WAXED_SUFFIX_KEY] = STRINGS.SUFFIX.WAXED.MALE.PLURAL -- Encerados.
     }
   },
 
@@ -23,7 +23,7 @@ return {
   {
     SINGULAR =
     {
-      [WAXED_SUFFIX_KEY] = STRINGS.WAXED_SUFFIX.FEMALE.SINGULAR, -- Encerada.
+      [WAXED_SUFFIX_KEY] = STRINGS.SUFFIX.WAXED.FEMALE.SINGULAR, -- Encerada.
 
       "dragonfruit_oversized_waxed",
       "eggplant_oversized_waxed",
@@ -36,7 +36,7 @@ return {
 
     PLURAL =
     {
-      [WAXED_SUFFIX_KEY] = STRINGS.WAXED_SUFFIX.FEMALE.PLURAL, -- Enceradas.
+      [WAXED_SUFFIX_KEY] = STRINGS.SUFFIX.WAXED.FEMALE.PLURAL, -- Enceradas.
 
       "carrot_oversized_waxed"
     }

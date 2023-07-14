@@ -1,7 +1,7 @@
 return {
   SINGULAR =
   {
-    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.FOOD.FEMALE.SINGULAR, -- Remojada.
+    [WET_SUFFIX_KEY] = STRINGS.SUFFIX.WET.FOOD.FEMALE.SINGULAR, -- Remojada.
 
     "chum", -- Tool object.
 
@@ -124,11 +124,13 @@ return {
     "mutator_spitter",
     "mutator_warrior",
     "mutator_water",
+    "oceanfish_medium_2_inv",
     "oceanfish_small_1_inv",
     "oceanfish_small_2_inv",
     "onion",
     "onion_cooked",
     "opalpreciousgem",
+    "orangegem",
     "phlegm",
     "pigskin",
     "plantmeat",
@@ -198,7 +200,7 @@ return {
 
   PLURAL =
   {
-    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.FOOD.FEMALE.PLURAL, -- Remojadas.
+    [WET_SUFFIX_KEY] = STRINGS.SUFFIX.WET.FOOD.FEMALE.PLURAL, -- Remojadas.
 
     "antchovies",
     "ash",

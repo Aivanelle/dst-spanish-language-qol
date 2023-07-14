@@ -1,10 +1,15 @@
 local Inv = require "widgets/inventorybar"
+local GetOriginalDescriptionString = Inv.GetDescriptionString
 
 function Inv:GetDescriptionString(item)
-  if item == nil then return "" end
-
+  local str = GetOriginalDescriptionString(self, item)
   local adjective = item:GetAdjective()
-  local name = item:GetDisplayName()
 
-  return adjective ~= nil and (name .. " " .. adjective) or name
+  if str ~= "" and adjective then
+    local name = item:GetDisplayName()
+
+    str = str:gsub(adjective .. " " .. name, ConstructAdjectivedName(item, name, adjective))
+  end
+
+  return str
 end

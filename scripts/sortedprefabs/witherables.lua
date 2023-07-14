@@ -3,7 +3,7 @@ return {
   {
     SINGULAR =
     {
-      [WITHERED_SUFFIX_KEY] = STRINGS.WITHERED_SUFFIX.MALE.SINGULAR,
+      [WITHERED_SUFFIX_KEY] = STRINGS.SUFFIX.WITHERED.MALE.SINGULAR,
 
       "bananabush",
       "berrybush",
@@ -20,7 +20,7 @@ return {
   {
     SINGULAR =
     {
-      [WITHERED_SUFFIX_KEY] = STRINGS.WITHERED_SUFFIX.FEMALE.SINGULAR,
+      [WITHERED_SUFFIX_KEY] = STRINGS.SUFFIX.WITHERED.FEMALE.SINGULAR,
 
       "grass",
       "depleted_grass",
@@ -29,7 +29,7 @@ return {
 
     PLURAL =
     {
-      [WITHERED_SUFFIX_KEY] = STRINGS.WITHERED_SUFFIX.FEMALE.PLURAL,
+      [WITHERED_SUFFIX_KEY] = STRINGS.SUFFIX.WITHERED.FEMALE.PLURAL,
 
       "monkeytail"
     }

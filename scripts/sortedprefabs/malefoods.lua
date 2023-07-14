@@ -1,7 +1,7 @@
 return {
   SINGULAR =
   {
-    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.FOOD.MALE.SINGULAR, -- Remojado.
+    [WET_SUFFIX_KEY] = STRINGS.SUFFIX.WET.FOOD.MALE.SINGULAR, -- Remojado.
 
     "bananajuice",
     "bananajuice_spice_chili",
@@ -202,6 +202,14 @@ return {
     "nightmarepie_spice_salt",
     "nightmarepie_spice_sugar",
     "nitre",
+    "oceanfish_medium_1_inv",
+    "oceanfish_medium_3_inv",
+    "oceanfish_medium_4_inv",
+    "oceanfish_medium_5_inv",
+    "oceanfish_medium_6_inv",
+    "oceanfish_medium_7_inv",
+    "oceanfish_medium_8_inv",
+    "oceanfish_medium_9_inv",
     "oceanfish_small_3_inv",
     "oceanfish_small_4_inv",
     "oceanfish_small_5_inv",
@@ -257,6 +265,8 @@ return {
     "taffy_spice_garlic",
     "taffy_spice_salt",
     "taffy_spice_sugar",
+    "tallbirdegg",
+    "tallbirdegg_cracked",
     "tomato",
     "tomato_cooked",
     "trunk_cooked",
@@ -301,7 +311,7 @@ return {
 
   PLURAL =
   {
-    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.FOOD.MALE.PLURAL, -- Remojados.
+    [WET_SUFFIX_KEY] = STRINGS.SUFFIX.WET.FOOD.MALE.PLURAL, -- Remojados.
 
     "asparagus",
     "asparagus_cooked",

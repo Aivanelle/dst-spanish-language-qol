@@ -1,7 +1,7 @@
 return {
   SINGULAR =
   {
-    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.FUEL.MALE.SINGULAR, -- Mojado.
+    [WET_SUFFIX_KEY] = STRINGS.SUFFIX.WET.FUEL.MALE.SINGULAR, -- Mojado.
 
     "anchor_item",
     "beardhair",
@@ -27,6 +27,7 @@ return {
     "carnivaldecor_eggride2_kit",
     "carnivaldecor_eggride3_kit",
     "carnivaldecor_eggride4_kit",
+    "carnivalgame_herding_kit",
     "carnivaldecor_lamp_kit",
     "carnivaldecor_plant_kit",
     "carnivalgame_feedchicks_kit",
@@ -38,6 +39,7 @@ return {
     "cookbook",
     "dug_bananabush",
     "dug_berrybush",
+    "dug_berrybush2",
     "dug_berrybush_juicy",
     "dug_marsh_bush",
     "dug_rock_avocado_bush",
@@ -120,7 +122,7 @@ return {
 
   PLURAL =
   {
-    [WET_SUFFIX_KEY] = STRINGS.WET_SUFFIX.FUEL.MALE.PLURAL, -- Mojados.
+    [WET_SUFFIX_KEY] = STRINGS.SUFFIX.WET.FUEL.MALE.PLURAL, -- Mojados.
 
     "blueprint",
     "carnival_prizeticket",
