@@ -164,6 +164,7 @@ return {
     "icecream_spice_garlic",
     "icecream_spice_salt",
     "icecream_spice_sugar",
+    "ipecacsyrup",
     "jammypreserves",
     "jammypreserves_spice_chili",
     "jammypreserves_spice_garlic",
