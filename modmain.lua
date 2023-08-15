@@ -35,6 +35,40 @@ end
 
 enableSuffixes(STRINGS.SUFFIX)
 
+GRAMMATICAL_NUMBER =
+{
+  PLURAL = "PLURAL",
+  SINGULAR = "SINGULAR"
+}
+
+GENDER =
+{
+  MASCULINE = "MASCULINE",
+  FEMININE = "FEMININE"
+}
+
+local function setGrammarComponent(prefabs, gender, grammaticalNumber)
+  for _, prefab in ipairs(prefabs) do
+    AddPrefabPostInit(prefab, function(inst)
+      inst:AddComponent("grammar")
+      inst.components.grammar:SetGrammaticalNumber(grammaticalNumber)
+      inst.components.grammar:SetGender(gender)
+    end)
+  end
+end
+
+local MASCULINE_SINGULAR = require "sortedprefabs/masculinesingular"
+setGrammarComponent(MASCULINE_SINGULAR, GENDER.MASCULINE, GRAMMATICAL_NUMBER.SINGULAR)
+
+local MASCULINE_PLURAL = require "sortedprefabs/masculineplural"
+setGrammarComponent(MASCULINE_PLURAL, GENDER.MASCULINE, GRAMMATICAL_NUMBER.PLURAL)
+
+local FEMININE_SINGULAR = require "sortedprefabs/femininesingular"
+setGrammarComponent(FEMININE_SINGULAR, GENDER.FEMININE, GRAMMATICAL_NUMBER.SINGULAR)
+
+local FEMININE_PLURAL = require "sortedprefabs/feminineplural"
+setGrammarComponent(FEMININE_PLURAL, GENDER.FEMININE, GRAMMATICAL_NUMBER.PLURAL)
+
 local unpack = _G.unpack
 
 --[[
@@ -202,3 +236,5 @@ modimport("scripts/entityscriptmod.lua")
 modimport("scripts/widgets/hoverermod.lua")
 modimport("scripts/widgets/inventorybarmod.lua")
 modimport("scripts/widgets/itemtilemod.lua")
+
+-- modimport "getprefabs_dst.lua"
