@@ -119,5 +119,16 @@ STRINGS.SUFFIX =
   {
     MALE = { SINGULAR = "Marchito" },
     FEMALE = { SINGULAR = "Marchita", PLURAL = "Marchitas" }
+  },
+
+  SMOLDERING =
+  {
+    NEUTRAL = { SINGULAR = "Llameante", PLURAL = "Llameantes" }
+  },
+
+  BROKEN =
+  {
+    MALE = { SINGULAR = "Roto" },
+    FEMALE = { SINGULAR = "Rota" }
   }
 }
