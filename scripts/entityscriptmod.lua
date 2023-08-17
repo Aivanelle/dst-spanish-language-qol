@@ -1,125 +1,101 @@
-local FOODTYPE = _G.FOODTYPE
-local FUELTYPE = _G.FUELTYPE
-local EQUIPSLOTS = _G.EQUIPSLOTS
-local EntityScript = _G.EntityScript
-local oldGetAdjectivedName = EntityScript.GetAdjectivedName
-local ConstructAdjectivedName = _G.ConstructAdjectivedName
-
-if oldGetAdjectivedName then
-  function EntityScript:GetAdjectivedName(...)
-    local name = self:GetBasicDisplayName()
-    local prefab = self.prefab or self.nameoverride
-    local upperPrefab = prefab and prefab:upper()
-    local isKitcoonNamed = self:HasTag("kitcoon") and (self.components.named and self.components.named.name)
-    local isBeefaloNamed = prefab == "beefalo" and (self.components.named and self.components.named.name)
-
-    if self:HasTag("player") or not prefab then
-      return name
-    elseif self:HasTag("smolder") then
-      return ConstructAdjectivedName(self, name, STRINGS.SMOLDERINGITEM)
-    --[[
-      Deprecated feature.
-
-      elseif self:HasTag("diseased") then
-        return ConstructAdjectivedName(self, name, STRINGS.DISEASEDITEM)
-    ]]
-    elseif self:HasTag("rotten") then
-      return ConstructAdjectivedName(self, name, STRINGS.UI.HUD.SPOILED)
-    elseif self:HasTag("withered") then
-      local witheredSuffix = SUFFIXED_PREFABS[upperPrefab][WITHERED_SUFFIX_KEY] or STRINGS.WITHEREDITEM
-
-      return ConstructAdjectivedName(self, name, witheredSuffix)
-    elseif not self.no_wet_prefix and (self.always_wet_prefix or self:GetIsWet()) and not isKitcoonNamed and not isBeefaloNamed then
-      if self.wet_prefix ~= nil then
-        --[[
-            Rabbitholes changes its own wet suffix based in his collapsed state, since its not collapsed
-            suffix is declared in a local function, this has to be here.
-        ]]
-        if prefab == "rabbithole" and not self.iscollapsed:value() then
-          self.wet_prefix = SUFFIXED_PREFABS[upperPrefab][WET_SUFFIX_KEY]
-        end
-
-        return ConstructAdjectivedName(self, name, self.wet_prefix)
-      end
-
-      local suffix = nil
-      local equippable = self.replica.equippable
-
-      --[[
-          Since every prefab has already his suffix "attached" to it, the if and for statements
-        of the original function now are useless, nonetheless I'm keeping them as some sort of
-        debugging option ingame to be aware of any prefab that was not sorted.
-          If some prefab was not sorted in any table, it will display ingame as something like
-        "(AXE TOOL?) Hacha."
-      ]]
-      if equippable ~= nil then
-        local eslot = equippable:EquipSlot()
-        if eslot == EQUIPSLOTS.HANDS then
-          suffix = "(" .. upperPrefab .. " TOOL?)"
-        elseif eslot == EQUIPSLOTS.HEAD or eslot == EQUIPSLOTS.BODY then
-          suffix = "(" .. upperPrefab .. " CLOTHING?)"
-        end
-      end
-
-      for k, v in pairs(FOODTYPE) do
-        if self:HasTag("edible_" .. v) and not suffix then
-          suffix = "(" .. upperPrefab .. " FOOD?)"
-        end
-      end
-
-      for k, v in pairs(FUELTYPE) do
-        if self:HasTag(v .. "_fuel") and not suffix then
-          suffix = "(" .. upperPrefab .. " FUEL?)"
-        end
-      end
-
-      if not suffix then suffix = "(" .. upperPrefab .. " GENERIC?)" end
-
-      -- This is actually the important stuff.
-      if type(SUFFIXED_PREFABS[upperPrefab]) == "table" then
-        assert(SUFFIXED_PREFABS[upperPrefab][WET_SUFFIX_KEY], "Suffixed prefab table found but not suffix key for prefab '" .. self.prefab .. "'. Make sure you have a 'SUFFIX' key added to the proper table of grammatical number in scripts/sortedprefabs")
-        suffix = SUFFIXED_PREFABS[upperPrefab][WET_SUFFIX_KEY]
-      end
-
-      return ConstructAdjectivedName(self, name, suffix)
-    end
-    return name
+local function getNewAdjectivedName(adjectivedName, suffix, replacement)
+  if not replacement then
+    return adjectivedName
+  else
+    return egsub(adjectivedName, suffix, replacement)
   end
 end
 
+local EntityScript = _G.EntityScript
+
+function EntityScript:GetGrammaticalSuffix(suffixes)
+  local grammar = self.components.grammar
+  if grammar then
+    return (suffixes[grammar.gender] and suffixes[grammar.gender][grammar.grammaticalnumber]) or
+        (suffixes.NEUTRAL and suffixes.NEUTRAL[grammar.grammaticalnumber])
+  end
+end
+
+local FOODTYPE = {}
+for _, v in pairs(_G.FOODTYPE) do table.insert(FOODTYPE, "edible_" .. v) end
+
+local FUELTYPE = {}
+for _, v in pairs(_G.FUELTYPE) do table.insert(FUELTYPE, v .. "_fuel") end
+
+local EQUIPSLOTS = _G.EQUIPSLOTS
+local GetOriginalAdjectivedName = EntityScript.GetAdjectivedName
+
+function EntityScript:GetAdjectivedName()
+  local grammaticalSuffix = nil
+  local adjectivedName = GetOriginalAdjectivedName(self)
+
+  if self:HasTag("player") or (self.prefab == "rabbithole" and self.iscollapsed:value()) then
+    return adjectivedName
+  elseif self:HasTag("smolder") then
+    grammaticalSuffix = self:GetGrammaticalSuffix(STRINGS.SUFFIX.SMOLDERING)
+    return getNewAdjectivedName(adjectivedName, STRINGS.SMOLDERINGITEM, grammaticalSuffix)
+  elseif self:HasTag("withered") then
+    grammaticalSuffix = self:GetGrammaticalSuffix(STRINGS.SUFFIX.WITHERED)
+    return getNewAdjectivedName(adjectivedName, STRINGS.WITHEREDITEM, grammaticalSuffix)
+  elseif not self.no_wet_prefix and (self.always_wet_prefix or self:GetIsWet()) then
+    if self.prefab ~= "rabbithole" and self.wet_prefix then return adjectivedName end
+
+    local prefabType = nil
+
+    if self.replica.equippable and self.replica.equippable:EquipSlot() then
+      prefabType = self.replica.equippable:EquipSlot() == EQUIPSLOTS.HANDS and "TOOL" or "CLOTHING"
+    elseif self:HasOneOfTags(FOODTYPE) then
+      prefabType = "FOOD"
+    elseif self:HasOneOfTags(FUELTYPE) then
+      prefabType = "FUEL"
+    else
+      prefabType = "GENERIC"
+    end
+
+    grammaticalSuffix = self:GetGrammaticalSuffix(STRINGS.SUFFIX.WET[prefabType])
+    adjectivedName = getNewAdjectivedName(adjectivedName, STRINGS.WET_PREFIX[prefabType], grammaticalSuffix)
+  end
+
+  if self:HasTag("broken") then
+    grammaticalSuffix = self:GetGrammaticalSuffix(STRINGS.SUFFIX.BROKEN)
+    adjectivedName = getNewAdjectivedName(adjectivedName, STRINGS.BROKENITEM, grammaticalSuffix)
+  end
+
+  return adjectivedName
+end
+
+local GetOriginalAdjective = EntityScript.GetAdjective
+
+function EntityScript:GetAdjective()
+  local adjective = GetOriginalAdjective(self)
+
+  if self:HasTag("frozen") and self:HasTag("spoiled") then
+    return STRINGS.UI.HUD.SPOILED_FROZEN
+  end
+
+  return adjective
+end
+
 local TUNING = _G.TUNING
-local oldGetAdjective = EntityScript.GetAdjective
 
-if oldGetAdjective then
-  function EntityScript:GetAdjective(...)
-    local prefab = self.prefab or self.nameoverride
-    local upperPrefab = prefab and prefab:upper()
-    local SUFFIXES = SUFFIXED_PREFABS[upperPrefab]
-
-    if self.displayadjectivefn ~= nil then
-      return self:displayadjectivefn(self)
-    elseif self:HasTag("critter") then
-
-      for k, _ in pairs(TUNING.CRITTER_TRAITS) do
-        if self:HasTag("trait_" .. k) then
-          return (SUFFIXES and SUFFIXES[PET_TRAIT_SUFFIX_KEY[k]]) or STRINGS.UI.HUD.CRITTER_TRAITS[k]
-        end
+function EntityScript:GetGrammaticalAdjective()
+  if self.displayadjectivefn then
+    return self:GetAdjective()
+  elseif self:HasTag("critter") then
+    for trait, _ in pairs(TUNING.CRITTER_TRAITS) do
+      if self:HasTag("trait_" .. trait) and STRINGS.SUFFIX.PET_TRAIT[trait] then
+        return self:GetGrammaticalSuffix(STRINGS.SUFFIX.PET_TRAIT[trait])
       end
+    end
+  elseif self:HasOneOfTags({ "stale", "spoiled" }) then
+    if self:HasTag("small_livestock") then
+      if not self:HasTag("sickness") then
+        return self:GetGrammaticalSuffix(STRINGS.SUFFIX.CREATURE[self:HasTag("stale") and "HUNGRY" or "STARVING"])
+      end
+    else
+      if self:HasTag("frozen") then return self:GetAdjective() end
 
-    elseif self:HasTag("small_livestock") then
-      local hungryAdjective = (SUFFIXES and SUFFIXES[CREATURE_HUNGRY_SUFFIX_KEY]) or STRINGS.UI.HUD.HUNGRY
-      local starvingAdjective = (SUFFIXES and SUFFIXES[CREATURE_STARVING_SUFFIX_KEY]) or STRINGS.UI.HUD.STARVING
-
-      return not self:HasTag("sickness") and
-        ((self:HasTag("stale") and hungryAdjective) or (self:HasTag("spoiled") and starvingAdjective)) or nil
-    elseif self:HasTag("stale") then
-      local staleAdjective = (SUFFIXES and SUFFIXES[PERISHABLE_STALE_SUFFIX_KEY]) or STRINGS.UI.HUD.STALE
-
-      return self:HasTag("frozen") and STRINGS.UI.HUD.STALE_FROZEN or staleAdjective
-    elseif self:HasTag("spoiled") then
-      local spoiledAdjective = (SUFFIXES and SUFFIXES[PERISHABLE_SPOILED_SUFFIX_KEY]) or STRINGS.UI.HUD.SPOILED
-
-      return self:HasTag("frozen") and STRINGS.UI.HUD.STALE_FROZEN or spoiledAdjective
+      return self:GetGrammaticalSuffix(STRINGS.SUFFIX.PERISHABLE[self:HasTag("stale") and "STALE" or "SPOILED"])
     end
   end
 end
