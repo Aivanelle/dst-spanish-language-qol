@@ -4,7 +4,7 @@ STRINGS = _G.STRINGS
 modimport("scripts/strings.lua")
 
 local USE_PREFIX = _G.USE_PREFIX
-assert = _G.assert
+local assert = _G.assert
 
 --[[
   Traverse recursively the STRINGS.WET_SUFFIX suffixes table to set them as false in USE_PREFIX table.
@@ -23,17 +23,8 @@ end
 
 enableSuffixes(STRINGS.SUFFIX)
 
-GENDER =
-{
-  MASCULINE = "MASCULINE",
-  FEMININE = "FEMININE"
-}
-
-GRAMMATICAL_NUMBER =
-{
-  PLURAL = "PLURAL",
-  SINGULAR = "SINGULAR"
-}
+GENDER = { MASCULINE = "MASCULINE", FEMININE = "FEMININE" }
+GRAMMATICAL_NUMBER = { PLURAL = "PLURAL", SINGULAR = "SINGULAR" }
 
 local function setGrammarComponent(prefabs, gender, grammaticalNumber)
   for _, prefab in ipairs(prefabs) do
