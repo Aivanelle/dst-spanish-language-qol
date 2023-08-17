@@ -61,12 +61,12 @@ setGrammarComponent(FEMININE_SINGULAR, GENDER.FEMININE, GRAMMATICAL_NUMBER.SINGU
 local FEMININE_PLURAL = require "sortedprefabs/feminineplural"
 setGrammarComponent(FEMININE_PLURAL, GENDER.FEMININE, GRAMMATICAL_NUMBER.PLURAL)
 
-local NO_WET_SUFFIX_PREFABS = require("sortedprefabs/nowetsuffixprefabs")
+local NO_WET_SUFFIX = require("sortedprefabs/nowetsuffix")
 local function setNoWetPrefix(prefab)
   if not prefab.no_wet_prefix then prefab.no_wet_prefix = true end
 end
 
-for _, prefab in ipairs(NO_WET_SUFFIX_PREFABS) do AddPrefabPostInit(prefab, setNoWetPrefix) end
+for _, prefab in ipairs(NO_WET_SUFFIX) do AddPrefabPostInit(prefab, setNoWetPrefix) end
 
 local subfmt = _G.subfmt
 
