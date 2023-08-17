@@ -1,18 +1,6 @@
 _G = GLOBAL
-_G.WET_SUFFIX_KEY = "WET_SUFFIX"
-_G.WAXED_SUFFIX_KEY = "WAXED_SUFFIX"
-_G.CREATURE_HUNGRY_SUFFIX_KEY = "CREATURE_HUNGRY_SUFFIX"
-_G.CREATURE_STARVING_SUFFIX_KEY = "CREATURE_STARVING_SUFFIX"
-_G.PERISHABLE_STALE_SUFFIX_KEY = "PERISHABLE_STALE_SUFFIX"
-_G.PERISHABLE_SPOILED_SUFFIX_KEY = "PERISHABLE_SPOILED_SUFFIX"
-_G.WITHERED_SUFFIX_KEY = "WITHERED_SUFFIX"
-_G.PET_TRAIT_SUFFIX_KEY =
-{
-  COMBAT = "PET_TRAIT_COMBAT_SUFFIX",
-  WELLFED = "PET_TRAIT_WELLFED_SUFFIX"
-}
-
 STRINGS = _G.STRINGS
+
 modimport("scripts/strings.lua")
 
 local USE_PREFIX = _G.USE_PREFIX
@@ -35,16 +23,16 @@ end
 
 enableSuffixes(STRINGS.SUFFIX)
 
-GRAMMATICAL_NUMBER =
-{
-  PLURAL = "PLURAL",
-  SINGULAR = "SINGULAR"
-}
-
 GENDER =
 {
   MASCULINE = "MASCULINE",
   FEMININE = "FEMININE"
+}
+
+GRAMMATICAL_NUMBER =
+{
+  PLURAL = "PLURAL",
+  SINGULAR = "SINGULAR"
 }
 
 local function setGrammarComponent(prefabs, gender, grammaticalNumber)
@@ -53,6 +41,10 @@ local function setGrammarComponent(prefabs, gender, grammaticalNumber)
       inst:AddComponent("grammar")
       inst.components.grammar:SetGrammaticalNumber(grammaticalNumber)
       inst.components.grammar:SetGender(gender)
+
+      if inst.displayadjectivefn and inst.displayadjectivefn() == STRINGS.UI.HUD.WAXED then
+        inst.displayadjectivefn = function() return STRINGS.SUFFIX.WAXED[gender][grammaticalNumber] end
+      end
     end)
   end
 end
@@ -68,115 +60,6 @@ setGrammarComponent(FEMININE_SINGULAR, GENDER.FEMININE, GRAMMATICAL_NUMBER.SINGU
 
 local FEMININE_PLURAL = require "sortedprefabs/feminineplural"
 setGrammarComponent(FEMININE_PLURAL, GENDER.FEMININE, GRAMMATICAL_NUMBER.PLURAL)
-
-local unpack = _G.unpack
-
---[[
-    SUFFIXED_PREFABS table is filled with every prefab as a key and their corresponding table containing
-  their corresponding suffixes. For example:
-  SUFFIXED_PREFABS =
-  {
-    AXE =
-    {
-      SUFFIX = "Resbaladiza"
-    },
-
-    PEROGIES =
-    {
-      SUFFIX = "Remojado"
-    },
-
-    EVERGREEN =
-    {
-      SUFFIX = "Húmedo"
-    }
-
-    ...
-  }
-]]
-SUFFIXED_PREFABS = {}
-local function suffixPrefabs(sortedPrefabsTable, ...)
-  for k, v in pairs(sortedPrefabsTable) do
-    if type(v) == "table" then
-      suffixPrefabs(v, unpack(arg))
-    else
-      if type(k) == "number" then
-        local upperPrefab = v:upper()
-  
-        if type(SUFFIXED_PREFABS[upperPrefab]) ~= "table" then
-          SUFFIXED_PREFABS[upperPrefab] = {}
-        end
-
-        for _, suffixKey in ipairs(arg) do
-          SUFFIXED_PREFABS[upperPrefab][suffixKey] = sortedPrefabsTable[suffixKey]
-        end
-      end
-    end
-  end
-end
-
-WET_SUFFIX_KEY = _G.WET_SUFFIX_KEY
-WAXED_SUFFIX_KEY = _G.WAXED_SUFFIX_KEY
-CREATURE_HUNGRY_SUFFIX_KEY = _G.CREATURE_HUNGRY_SUFFIX_KEY
-CREATURE_STARVING_SUFFIX_KEY = _G.CREATURE_STARVING_SUFFIX_KEY
-PERISHABLE_STALE_SUFFIX_KEY = _G.PERISHABLE_STALE_SUFFIX_KEY
-PERISHABLE_SPOILED_SUFFIX_KEY = _G.PERISHABLE_SPOILED_SUFFIX_KEY
-PET_TRAIT_SUFFIX_KEY = _G.PET_TRAIT_SUFFIX_KEY
-WITHERED_SUFFIX_KEY = _G.WITHERED_SUFFIX_KEY
-
-local MALE_GENERICS = require("sortedprefabs/malegenerics")
-local FEMALE_GENERICS = require("sortedprefabs/femalegenerics")
-local MALE_TOOLS = require("sortedprefabs/maletools")
-local FEMALE_TOOLS = require("sortedprefabs/femaletools")
-local MALE_CLOTHINGS = require("sortedprefabs/maleclothings")
-local FEMALE_CLOTHINGS = require("sortedprefabs/femaleclothings")
-local MALE_FUELS = require("sortedprefabs/malefuels")
-local FEMALE_FUELS = require("sortedprefabs/femalefuels")
-local MALE_FOODS = require("sortedprefabs/malefoods")
-local FEMALE_FOODS = require("sortedprefabs/femalefoods")
-local MALE_PERISHABLES = require("sortedprefabs/maleperishables")
-local FEMALE_PERISHABLES = require("sortedprefabs/femaleperishables")
-local WAXED_VEGGIES = require("sortedprefabs/waxedveggies")
-local INVENTORY_CREATURES = require("sortedprefabs/inventorycreatures")
-local PETS = require("sortedprefabs/pets")
-local WITHERABLES = require("sortedprefabs/witherables")
-
-suffixPrefabs(MALE_GENERICS, WET_SUFFIX_KEY)
-suffixPrefabs(FEMALE_GENERICS, WET_SUFFIX_KEY)
-suffixPrefabs(MALE_TOOLS, WET_SUFFIX_KEY)
-suffixPrefabs(FEMALE_TOOLS, WET_SUFFIX_KEY)
-suffixPrefabs(MALE_CLOTHINGS, WET_SUFFIX_KEY)
-suffixPrefabs(FEMALE_CLOTHINGS, WET_SUFFIX_KEY)
-suffixPrefabs(MALE_FUELS, WET_SUFFIX_KEY)
-suffixPrefabs(FEMALE_FUELS, WET_SUFFIX_KEY)
-suffixPrefabs(MALE_FOODS, WET_SUFFIX_KEY)
-suffixPrefabs(FEMALE_FOODS, WET_SUFFIX_KEY)
-suffixPrefabs(MALE_PERISHABLES, PERISHABLE_STALE_SUFFIX_KEY, PERISHABLE_SPOILED_SUFFIX_KEY)
-suffixPrefabs(FEMALE_PERISHABLES, PERISHABLE_STALE_SUFFIX_KEY, PERISHABLE_SPOILED_SUFFIX_KEY)
-suffixPrefabs(WAXED_VEGGIES, WAXED_SUFFIX_KEY)
-suffixPrefabs(INVENTORY_CREATURES, CREATURE_HUNGRY_SUFFIX_KEY, CREATURE_STARVING_SUFFIX_KEY)
-suffixPrefabs(PETS, PET_TRAIT_SUFFIX_KEY.COMBAT, PET_TRAIT_SUFFIX_KEY.WELLFED)
-suffixPrefabs(WITHERABLES, WITHERED_SUFFIX_KEY)
-
-local function setDisplayAdjectiveFn(self)
-  self.displayadjectivefn = function()
-    return SUFFIXED_PREFABS[self.prefab:upper()][WAXED_SUFFIX_KEY]
-  end
-end
-
-local function modWaxedVeggies(veggiesTable)
-  for k, v in pairs(veggiesTable) do
-    if type(v) == "table" then
-      modWaxedVeggies(v)
-    else
-      if type(k) == "number" then
-        AddPrefabPostInit(v:lower(), setDisplayAdjectiveFn)
-      end
-    end
-  end
-end
-
-modWaxedVeggies(WAXED_VEGGIES)
 
 local NO_WET_SUFFIX_PREFABS = require("sortedprefabs/nowetsuffixprefabs")
 local function setNoWetPrefix(prefab)
@@ -216,8 +99,13 @@ end
 AddPrefabPostInit("blueprint", setBlueprintDisplayName)
 
 local function simPostInitFn()
-  USE_PREFIX[STRINGS.WET_PREFIX.RABBITHOLE] = false
+  enableSuffixes(STRINGS.WET_PREFIX)
+
   USE_PREFIX[STRINGS.SMOLDERINGITEM] = false
+  USE_PREFIX[STRINGS.BROKENITEM] = false
+
+  USE_PREFIX[STRINGS.UI.HUD.STALE_FROZEN] = false
+  USE_PREFIX[STRINGS.UI.HUD.SPOILED_FROZEN] = false
 
   USE_PREFIX[STRINGS.WET_PREFIX.WETGOOP] = function(inst, name, adjective)
     if inst.prefab:find("wetgoop") then
@@ -231,10 +119,9 @@ end
 AddSimPostInit(simPostInitFn)
 
 ConstructAdjectivedName = _G.ConstructAdjectivedName
+function egsub(str, pattern, replacement) return str:gsub(_G.escape_lua_pattern(pattern), replacement) end
 
 modimport("scripts/entityscriptmod.lua")
 modimport("scripts/widgets/hoverermod.lua")
 modimport("scripts/widgets/inventorybarmod.lua")
 modimport("scripts/widgets/itemtilemod.lua")
-
--- modimport "getprefabs_dst.lua"
