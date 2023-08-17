@@ -14,4 +14,25 @@ client_only_mod = true
 icon_atlas = "modicon.xml"
 icon = "modicon.tex"
 
---configuration_options = {}
+configuration_options =
+{
+  {
+    name = "unknownAdjectives",
+    label = "Adjetivos desconocidos",
+    hover = "Muestra u oculta los adjetivos de objetos desconocidos para el mod, como pueden ser aquellos agregados por nuevas actualizaciones u otros mods.",
+    options =
+    {
+      {
+        description = "Por defecto",
+        data = "default",
+        hover = "Utiliza los adjetivos por defecto incluidos en tu mod de traducción."
+      },
+      {
+        description = "Ocultar",
+        data = "hide",
+        hover = "Solo verás el nombre del objeto, sin palabras extra añadidas."
+      }
+    },
+    default = "default"
+  }
+}
