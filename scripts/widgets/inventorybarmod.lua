@@ -7,8 +7,13 @@ function Inv:GetDescriptionString(item)
 
   if str ~= "" and adjective then
     local name = item:GetDisplayName()
+    local grammaticalAdjective = item:GetGrammaticalAdjective()
 
-    str = str:gsub(adjective .. " " .. name, ConstructAdjectivedName(item, name, adjective))
+    if not grammaticalAdjective then
+      str = egsub(str, adjective .. " " .. name, ConstructAdjectivedName(item, name, adjective))
+    else
+      str = egsub(str, adjective .. " " .. name, ConstructAdjectivedName(item, name, grammaticalAdjective))
+    end
   end
 
   return str

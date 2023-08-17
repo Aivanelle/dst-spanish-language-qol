@@ -12,8 +12,14 @@ function HoverText:OnUpdate()
 
     if adjective then
       local name = lmb.target:GetDisplayName()
+      local grammaticalAdjective = lmb.target:GetGrammaticalAdjective()
 
-      str = str:gsub(adjective .. " " .. name, ConstructAdjectivedName(lmb.target, name, adjective))
+      if not grammaticalAdjective then
+        str = egsub(str, adjective .. " " .. name, ConstructAdjectivedName(lmb.target, name, adjective))
+      else
+        str = egsub(str, adjective .. " " .. name, ConstructAdjectivedName(lmb.target, name, grammaticalAdjective))
+      end
+
       self.text:SetString(str)
     end
   end
