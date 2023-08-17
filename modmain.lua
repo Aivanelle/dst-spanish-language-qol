@@ -70,10 +70,10 @@ for _, prefab in ipairs(NO_WET_SUFFIX) do AddPrefabPostInit(prefab, setNoWetPref
 
 local subfmt = _G.subfmt
 
-local function setSpiceDisplayName(self)
-  self.displaynamefn = function()
-    local spice = self.components.edible and self.components.edible.spice
-    local upperNameOverride = self.nameoverride:upper()
+local function setSpiceDisplayName(inst)
+  inst.displaynamefn = function()
+    local spice = inst.components.edible and inst.components.edible.spice
+    local upperNameOverride = inst.nameoverride:upper()
 
     return STRINGS.SPICESMOD[spice][upperNameOverride] or subfmt(STRINGS.SPICESMOD[spice].GENERIC, { food = STRINGS.NAMES[upperNameOverride] })
   end
@@ -90,9 +90,9 @@ AddPrefabPostInit("hotchili_spice_sugar", setSpiceDisplayName)
 AddPrefabPostInit("leafloaf_spice_salt", setSpiceDisplayName)
 AddPrefabPostInit("leafloaf_spice_garlic", setSpiceDisplayName)
 
-local function setBlueprintDisplayName(self)
-  self.displaynamefn = function()
-    return subfmt(STRINGS.NAMES.BLUEPRINTMOD, { item = STRINGS.NAMES[self.recipetouse:upper()] or STRINGS.NAMES.UNKNOWN })
+local function setBlueprintDisplayName(inst)
+  inst.displaynamefn = function()
+    return subfmt(STRINGS.NAMES.BLUEPRINTMOD, { item = STRINGS.NAMES[inst.recipetouse:upper()] or STRINGS.NAMES.UNKNOWN })
   end
 end
 
