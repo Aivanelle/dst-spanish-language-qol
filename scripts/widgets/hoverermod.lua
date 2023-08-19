@@ -15,8 +15,8 @@ function HoverText:OnUpdate()
       local grammaticalAdjective = lmb.target:GetGrammaticalAdjective()
 
       if not grammaticalAdjective then
-        str =  unknownAdjectivesConfig == "default" and egsub(str, adjective .. " " .. name, ConstructAdjectivedName(lmb.target, name, adjective)) or
-            egsub(str, adjective .. " ", "")
+        str =  unknownAdjectivesConfig == "hide" and egsub(str, adjective .. " ", "") or
+            egsub(str, adjective .. " " .. name, ConstructAdjectivedName(lmb.target, name, adjective))
       else
         str = egsub(str, adjective .. " " .. name, ConstructAdjectivedName(lmb.target, name, grammaticalAdjective))
       end

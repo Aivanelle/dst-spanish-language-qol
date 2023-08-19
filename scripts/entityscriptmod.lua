@@ -1,7 +1,7 @@
 local function getNewAdjectivedName(adjectivedName, suffix, replacement)
   if not replacement then
-    return  unknownAdjectivesConfig == "default" and adjectivedName or
-        egsub(adjectivedName, " " .. suffix, "")
+    return  unknownAdjectivesConfig == "hide" and egsub(adjectivedName, " " .. suffix, "") or
+        adjectivedName
   else
     return egsub(adjectivedName, suffix, replacement)
   end

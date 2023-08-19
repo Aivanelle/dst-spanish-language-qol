@@ -10,8 +10,8 @@ function Inv:GetDescriptionString(item)
     local grammaticalAdjective = item:GetGrammaticalAdjective()
 
     if not grammaticalAdjective then
-      str =  unknownAdjectivesConfig == "default" and egsub(str, adjective .. " " .. name, ConstructAdjectivedName(item, name, adjective))
-          or egsub(str, adjective .. " ", "")
+      str =  unknownAdjectivesConfig == "hide" and egsub(str, adjective .. " ", "") or
+          egsub(str, adjective .. " " .. name, ConstructAdjectivedName(item, name, adjective))
     else
       str = egsub(str, adjective .. " " .. name, ConstructAdjectivedName(item, name, grammaticalAdjective))
     end

@@ -10,8 +10,8 @@ function ItemTile:GetDescriptionString()
     local grammaticalAdjective = self.item:GetGrammaticalAdjective()
 
     if not grammaticalAdjective then
-      str =  unknownAdjectivesConfig == "default" and egsub(str, adjective .. " " .. name, ConstructAdjectivedName(self.item, name, adjective))
-          or egsub(str, adjective .. " ", "")
+      str =  unknownAdjectivesConfig == "hide" and egsub(str, adjective .. " ", "") or
+          egsub(str, adjective .. " " .. name, ConstructAdjectivedName(self.item, name, adjective))
     else
       str = egsub(str, adjective .. " " .. name, ConstructAdjectivedName(self.item, name, grammaticalAdjective))
     end
