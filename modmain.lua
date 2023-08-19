@@ -90,6 +90,19 @@ end
 
 AddPrefabPostInit("blueprint", setBlueprintDisplayName)
 
+local function unsetWetPrefix(inst)
+  if inst.wet_prefix then inst.wet_prefix = nil end
+end
+
+AddPrefabPostInit("redpouch", unsetWetPrefix)
+AddPrefabPostInit("redpouch_yotp", unsetWetPrefix)
+AddPrefabPostInit("redpouch_yotc", unsetWetPrefix)
+AddPrefabPostInit("redpouch_yotb", unsetWetPrefix)
+AddPrefabPostInit("redpouch_yot_catcoon", unsetWetPrefix)
+AddPrefabPostInit("redpouch_yotr", unsetWetPrefix)
+AddPrefabPostInit("hermit_bundle", unsetWetPrefix)
+AddPrefabPostInit("hermit_bundle_shells", unsetWetPrefix)
+
 local function setCustomAdjectives()
   for k, _ in pairs(STRINGS.WET_PREFIX) do
     if STRINGS.SUFFIX.WET[k] then
