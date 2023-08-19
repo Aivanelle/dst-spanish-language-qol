@@ -109,6 +109,7 @@ end
 
 AddSimPostInit(simPostInitFn)
 
+unknownAdjectivesConfig = GetModConfigData("unknownAdjectives")
 ConstructAdjectivedName = _G.ConstructAdjectivedName
 function egsub(str, pattern, replacement) return str:gsub(_G.escape_lua_pattern(pattern), replacement) end
 
