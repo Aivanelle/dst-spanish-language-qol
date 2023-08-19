@@ -90,7 +90,35 @@ end
 
 AddPrefabPostInit("blueprint", setBlueprintDisplayName)
 
+local function setCustomAdjectives()
+  for k, _ in pairs(STRINGS.WET_PREFIX) do
+    if STRINGS.SUFFIX.WET[k] then
+      STRINGS.WET_PREFIX[k] = STRINGS.SUFFIX.WET[k].DEFAULT
+    end
+  end
+
+  for k, _ in pairs(STRINGS.UI.HUD.CRITTER_TRAITS) do
+    if STRINGS.SUFFIX.PET_TRAIT[k] then
+      STRINGS.UI.HUD.CRITTER_TRAITS[k] = STRINGS.SUFFIX.PET_TRAIT[k].DEFAULT
+    end
+  end
+
+  STRINGS.WITHEREDITEM = STRINGS.SUFFIX.WITHERED.DEFAULT
+  STRINGS.SMOLDERINGITEM = STRINGS.SUFFIX.SMOLDERING.DEFAULT
+  STRINGS.BROKENITEM = STRINGS.SUFFIX.BROKEN.DEFAULT
+
+  STRINGS.UI.HUD.WAXED = STRINGS.SUFFIX.WAXED.DEFAULT
+  STRINGS.UI.HUD.STALE = STRINGS.SUFFIX.PERISHABLE.STALE.DEFAULT
+  STRINGS.UI.HUD.SPOILED = STRINGS.SUFFIX.PERISHABLE.SPOILED.DEFAULT
+  STRINGS.UI.HUD.HUNGRY = STRINGS.SUFFIX.CREATURE.HUNGRY.DEFAULT
+  STRINGS.UI.HUD.STARVING = STRINGS.SUFFIX.CREATURE.STARVING.DEFAULT
+end
+
+unknownAdjectivesConfig = GetModConfigData("unknownAdjectives")
+
 local function simPostInitFn()
+  if unknownAdjectivesConfig == "custom" then setCustomAdjectives() end
+
   enableSuffixes(STRINGS.WET_PREFIX)
   enableSuffixes(STRINGS.UI.HUD.CRITTER_TRAITS)
 
@@ -117,7 +145,6 @@ end
 
 AddSimPostInit(simPostInitFn)
 
-unknownAdjectivesConfig = GetModConfigData("unknownAdjectives")
 ConstructAdjectivedName = _G.ConstructAdjectivedName
 function egsub(str, pattern, replacement) return str:gsub(_G.escape_lua_pattern(pattern), replacement) end
 
