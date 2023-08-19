@@ -1,7 +1,7 @@
 _G = GLOBAL
 STRINGS = _G.STRINGS
 
-modimport("scripts/stringsmod.lua")
+modimport "scripts/stringsmod.lua"
 
 local USE_PREFIX = _G.USE_PREFIX
 local assert = _G.assert
@@ -66,7 +66,8 @@ local function setSpiceDisplayName(inst)
     local spice = inst.components.edible and inst.components.edible.spice
     local upperNameOverride = inst.nameoverride:upper()
 
-    return STRINGS.SPICESMOD[spice][upperNameOverride] or subfmt(STRINGS.SPICESMOD[spice].GENERIC, { food = STRINGS.NAMES[upperNameOverride] })
+    return STRINGS.SPICESMOD[spice][upperNameOverride] or
+        subfmt(STRINGS.SPICESMOD[spice].GENERIC, { food = STRINGS.NAMES[upperNameOverride] })
   end
 end
 
@@ -120,7 +121,7 @@ unknownAdjectivesConfig = GetModConfigData("unknownAdjectives")
 ConstructAdjectivedName = _G.ConstructAdjectivedName
 function egsub(str, pattern, replacement) return str:gsub(_G.escape_lua_pattern(pattern), replacement) end
 
-modimport("scripts/entityscriptmod.lua")
-modimport("scripts/widgets/hoverermod.lua")
-modimport("scripts/widgets/inventorybarmod.lua")
-modimport("scripts/widgets/itemtilemod.lua")
+modimport "scripts/entityscriptmod.lua"
+modimport "scripts/widgets/hoverermod.lua"
+modimport "scripts/widgets/inventorybarmod.lua"
+modimport "scripts/widgets/itemtilemod.lua"
