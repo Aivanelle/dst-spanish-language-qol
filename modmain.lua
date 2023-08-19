@@ -1,7 +1,7 @@
 _G = GLOBAL
 STRINGS = _G.STRINGS
 
-modimport("scripts/strings.lua")
+modimport("scripts/stringsmod.lua")
 
 local USE_PREFIX = _G.USE_PREFIX
 local assert = _G.assert
