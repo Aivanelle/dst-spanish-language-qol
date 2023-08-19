@@ -1,6 +1,7 @@
 local function getNewAdjectivedName(adjectivedName, suffix, replacement)
   if not replacement then
-    return adjectivedName
+    return  unknownAdjectivesConfig == "default" and adjectivedName or
+        egsub(adjectivedName, " " .. suffix, "")
   else
     return egsub(adjectivedName, suffix, replacement)
   end
@@ -80,7 +81,7 @@ local TUNING = _G.TUNING
 
 function EntityScript:GetGrammaticalAdjective()
   if self.displayadjectivefn then
-    return self:GetAdjective()
+    return self.components.grammar and self:GetAdjective() or nil
   elseif self:HasTag("critter") then
     for trait, _ in pairs(TUNING.CRITTER_TRAITS) do
       if self:HasTag("trait_" .. trait) and STRINGS.SUFFIX.PET_TRAIT[trait] then
