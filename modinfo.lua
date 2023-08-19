@@ -28,7 +28,12 @@ configuration_options =
         hover = "Utiliza los adjetivos por defecto incluidos en tu mod de traducción."
       },
       {
-        description = "Ocultar",
+        description = "Personalizados",
+        data = "custom",
+        hover = "Usa los adjetivos por defecto incluidos en este mod."
+      },
+      {
+        description = "Ocultos",
         data = "hide",
         hover = "Solo verás el nombre del objeto, sin palabras extra añadidas."
       }
