@@ -12,8 +12,8 @@ local EntityScript = _G.EntityScript
 function EntityScript:GetGrammaticalSuffix(suffixes)
   local grammar = self.components.grammar
   if grammar then
-    return (suffixes[grammar.gender] and suffixes[grammar.gender][grammar.grammaticalnumber]) or
-        (suffixes.NEUTRAL and suffixes.NEUTRAL[grammar.grammaticalnumber])
+    return suffixes[grammar.gender] and suffixes[grammar.gender][grammar.grammaticalnumber] or
+        suffixes.NEUTRAL and suffixes.NEUTRAL[grammar.grammaticalnumber]
   end
 end
 
@@ -84,15 +84,15 @@ function EntityScript:GetGrammaticalAdjective()
     return self.components.grammar and self:GetAdjective() or nil
   elseif self:HasTag("critter") then
     for trait, _ in pairs(TUNING.CRITTER_TRAITS) do
-      if self:HasTag("trait_" .. trait) and STRINGS.SUFFIX.PET_TRAIT[trait] then
-        return self:GetGrammaticalSuffix(STRINGS.SUFFIX.PET_TRAIT[trait])
+      if self:HasTag("trait_" .. trait) then
+        return STRINGS.SUFFIX.PET_TRAIT[trait] and self:GetGrammaticalSuffix(STRINGS.SUFFIX.PET_TRAIT[trait]) or
+            self.components.grammar and self:GetAdjective()
       end
     end
   elseif self:HasOneOfTags({ "stale", "spoiled" }) then
     if self:HasTag("small_livestock") then
-      if not self:HasTag("sickness") then
-        return self:GetGrammaticalSuffix(STRINGS.SUFFIX.CREATURE[self:HasTag("stale") and "HUNGRY" or "STARVING"])
-      end
+      return not self:HasTag("sickness") and
+          self:GetGrammaticalSuffix(STRINGS.SUFFIX.CREATURE[self:HasTag("stale") and "HUNGRY" or "STARVING"])
     else
       if self:HasTag("frozen") then return self:GetAdjective() end
 
