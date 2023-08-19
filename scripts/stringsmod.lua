@@ -36,31 +36,41 @@ STRINGS.SUFFIX =
     FOOD =
     {
       MASCULINE = { SINGULAR = "Remojado", PLURAL = "Remojados" },
-      FEMININE = { SINGULAR = "Remojada", PLURAL = "Remojadas" }
+      FEMININE = { SINGULAR = "Remojada", PLURAL = "Remojadas" },
+
+      DEFAULT = "Remojado(a)"
     },
 
     CLOTHING =
     {
       MASCULINE = { SINGULAR = "Empapado", PLURAL = "Empapados" },
-      FEMININE = { SINGULAR = "Empapada", PLURAL = "Empapadas" }
+      FEMININE = { SINGULAR = "Empapada", PLURAL = "Empapadas" },
+
+      DEFAULT = "Empapado(a)"
     },
 
     TOOL =
     {
       MASCULINE = { SINGULAR = "Resbaladizo", PLURAL = "Resbaladizos" },
-      FEMININE = { SINGULAR = "Resbaladiza", PLURAL = "Resbaladizas" }
+      FEMININE = { SINGULAR = "Resbaladiza", PLURAL = "Resbaladizas" },
+
+      DEFAULT = "Resbaladizo(a)"
     },
 
     FUEL =
     {
       MASCULINE = { SINGULAR = "Mojado", PLURAL = "Mojados" },
-      FEMININE = { SINGULAR = "Mojada", PLURAL = "Mojadas" }
+      FEMININE = { SINGULAR = "Mojada", PLURAL = "Mojadas" },
+
+      DEFAULT = "Mojado(a)"
     },
 
     GENERIC =
     {
       MASCULINE = { SINGULAR = "Húmedo", PLURAL = "Húmedos" },
-      FEMININE = { SINGULAR = "Húmeda", PLURAL = "Húmedas" }
+      FEMININE = { SINGULAR = "Húmeda", PLURAL = "Húmedas" },
+
+      DEFAULT = "Húmedo(a)"
     }
   },
 
@@ -69,20 +79,26 @@ STRINGS.SUFFIX =
     STALE =
     {
       MASCULINE = { SINGULAR = "Rancio", PLURAL = "Rancios" },
-      FEMININE = { SINGULAR = "Rancia", PLURAL = "Rancias" }
+      FEMININE = { SINGULAR = "Rancia", PLURAL = "Rancias" },
+
+      DEFAULT = "Rancio(a)"
     },
 
     SPOILED =
     {
       MASCULINE = { SINGULAR = "Caducado", PLURAL = "Caducados" },
-      FEMININE = { SINGULAR = "Caducada", PLURAL = "Caducadas" }
+      FEMININE = { SINGULAR = "Caducada", PLURAL = "Caducadas" },
+
+      DEFAULT = "Caducado(a)"
     }
   },
 
   WAXED =
   {
     MASCULINE = { SINGULAR = "Encerado", PLURAL = "Encerados" },
-    FEMININE = { SINGULAR = "Encerada", PLURAL = "Enceradas" }
+    FEMININE = { SINGULAR = "Encerada", PLURAL = "Enceradas" },
+
+    DEFAULT = "Encerado(a)"
   },
 
   CREATURE =
@@ -90,13 +106,17 @@ STRINGS.SUFFIX =
     HUNGRY =
     {
       MASCULINE = { SINGULAR = "Hambriento" },
-      FEMININE = { SINGULAR = "Hambrienta" }
+      FEMININE = { SINGULAR = "Hambrienta" },
+
+      DEFAULT = "Hambriento(a)"
     },
 
     STARVING =
     {
       MASCULINE = { SINGULAR = "muy Hambriento" },
-      FEMININE = { SINGULAR = "muy Hambrienta" }
+      FEMININE = { SINGULAR = "muy Hambrienta" },
+
+      DEFAULT = "muy Hambriento(a)"
     }
   },
 
@@ -105,30 +125,40 @@ STRINGS.SUFFIX =
     COMBAT =
     {
       MASCULINE = { SINGULAR = "Agresivo" },
-      FEMININE = { SINGULAR = "Agresiva" }
+      FEMININE = { SINGULAR = "Agresiva" },
+
+      DEFAULT = "Agresivo(a)"
     },
   
     WELLFED =
     {
       MASCULINE = { SINGULAR = "Regordete" },
-      FEMININE = { SINGULAR = "Regordeta" }
-    }
+      FEMININE = { SINGULAR = "Regordeta" },
+
+      DEFAULT = "Regordete(a)"
+    },
   },
 
   WITHERED =
   {
     MASCULINE = { SINGULAR = "Marchito" },
-    FEMININE = { SINGULAR = "Marchita", PLURAL = "Marchitas" }
+    FEMININE = { SINGULAR = "Marchita", PLURAL = "Marchitas" },
+
+    DEFAULT = "Marchito(a)"
   },
 
   SMOLDERING =
   {
-    NEUTRAL = { SINGULAR = "Llameante", PLURAL = "Llameantes" }
+    NEUTRAL = { SINGULAR = "Llameante", PLURAL = "Llameantes" },
+
+    DEFAULT = "Llameante(s)"
   },
 
   BROKEN =
   {
     MASCULINE = { SINGULAR = "Roto" },
-    FEMININE = { SINGULAR = "Rota" }
+    FEMININE = { SINGULAR = "Rota" },
+
+    DEFAULT = "Roto(a)"
   }
 }
