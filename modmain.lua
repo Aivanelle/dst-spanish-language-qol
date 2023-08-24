@@ -108,6 +108,8 @@ local function moosePostInit(inst)
         originalFn(inst)
         updateMooseGender(inst)
       end
+
+      break
     end
   end
 
