@@ -90,6 +90,37 @@ end
 
 AddPrefabPostInit("blueprint", setBlueprintDisplayName)
 
+local function updateMooseGender(inst)
+  local name = inst.components.named.name
+  inst.components.grammar:SetGender(name == STRINGS.NAMES.MOOSE1 and GENDER.FEMININE or GENDER.MASCULINE)
+end
+
+local function moosePostInit(inst)
+  inst:AddComponent("grammar")
+  inst.components.grammar:SetGrammaticalNumber(GRAMMATICAL_NUMBER.SINGULAR)
+  updateMooseGender(inst)
+
+  for task, _ in pairs(inst.pendingtasks) do
+    if task.period == 5 then
+      local originalFn = task.fn
+
+      task.fn = function(inst)
+        originalFn(inst)
+        updateMooseGender(inst)
+      end
+    end
+  end
+
+  local originalOnLoad = inst.OnLoad
+
+  inst.OnLoad = function(inst, data)
+    originalOnLoad(inst, data)
+    updateMooseGender(inst)
+  end
+end
+
+AddPrefabPostInit("moose", moosePostInit)
+
 local function unsetWetPrefix(inst)
   if inst.wet_prefix then inst.wet_prefix = nil end
 end
