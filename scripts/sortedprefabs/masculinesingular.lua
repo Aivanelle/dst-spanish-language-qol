@@ -866,7 +866,6 @@ return {
   "moonrockseed",
   "moonspiderden",
   "moonstorm_spark",
-  "moose",
   "mooseegg",
   "mosquito",
   "mossling",
