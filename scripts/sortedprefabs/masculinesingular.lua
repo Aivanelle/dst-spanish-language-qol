@@ -684,6 +684,7 @@ return {
   "coldfire",
   "coldfirepit",
   "compostingbin",
+  "cookiecutter",
   "cotl_tabernacle_level1",
   "cotl_tabernacle_level2",
   "cotl_tabernacle_level3",
