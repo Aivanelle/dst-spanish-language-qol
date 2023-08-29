@@ -123,6 +123,31 @@ end
 
 AddPrefabPostInit("moose", moosePostInit)
 
+local function beefaloPostInit(inst)
+  local originalOnWrittenEnded = inst.components.writeable.onwritingended
+
+  inst.components.writeable:SetOnWritingEndedFn(function(inst)
+    originalOnWrittenEnded(inst)
+    inst.no_wet_prefix = true
+  end)
+
+  local originalOnLoad = inst.OnLoad
+
+  inst.OnLoad = function(inst, data)
+    originalOnLoad(inst, data)
+
+    if inst.components.named and inst.components.named.name then
+      inst.no_wet_prefix = true
+    end
+  end
+
+  inst:ListenForEvent("stopfollowing", function()
+    inst.no_wet_prefix = false
+  end)
+end
+
+AddPrefabPostInit("beefalo", beefaloPostInit)
+
 local function unsetWetPrefix(inst)
   if inst.wet_prefix then inst.wet_prefix = nil end
 end
