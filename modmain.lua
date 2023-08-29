@@ -29,7 +29,8 @@ GRAMMATICAL_NUMBER = { PLURAL = "PLURAL", SINGULAR = "SINGULAR" }
 local function setGrammarComponent(prefabs, gender, grammaticalNumber)
   for _, prefab in ipairs(prefabs) do
     AddPrefabPostInit(prefab, function(inst)
-      inst:AddComponent("grammar")
+      if not inst.components.grammar then inst:AddComponent("grammar") end
+
       inst.components.grammar:SetGrammaticalNumber(grammaticalNumber)
       inst.components.grammar:SetGender(gender)
 
