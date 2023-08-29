@@ -7,8 +7,14 @@ function ItemTile:GetDescriptionString()
 
   if str ~= "" and adjective then
     local name = self.item:GetDisplayName()
+    local grammaticalAdjective = self.item:GetGrammaticalAdjective()
 
-    str = str:gsub(adjective .. " " .. name, ConstructAdjectivedName(self.item, name, adjective))
+    if not grammaticalAdjective then
+      str =  unknownAdjectivesConfig == "hide" and egsub(str, adjective .. " ", "") or
+          egsub(str, adjective .. " " .. name, ConstructAdjectivedName(self.item, name, adjective))
+    else
+      str = egsub(str, adjective .. " " .. name, ConstructAdjectivedName(self.item, name, grammaticalAdjective))
+    end
   end
 
   return str
