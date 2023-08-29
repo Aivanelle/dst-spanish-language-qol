@@ -99,7 +99,8 @@ end
 local function moosePostInit(inst)
   inst:AddComponent("grammar")
   inst.components.grammar:SetGrammaticalNumber(GRAMMATICAL_NUMBER.SINGULAR)
-  updateMooseGender(inst)
+
+  inst:DoTaskInTime(0, function() updateMooseGender(inst) end)
 
   for task, _ in pairs(inst.pendingtasks) do
     if task.period == 5 then
@@ -113,13 +114,6 @@ local function moosePostInit(inst)
       break
     end
   end
-
-  local originalOnLoad = inst.OnLoad
-
-  inst.OnLoad = function(inst, data)
-    originalOnLoad(inst, data)
-    updateMooseGender(inst)
-  end
 end
 
 AddPrefabPostInit("moose", moosePostInit)
@@ -132,15 +126,11 @@ local function beefaloPostInit(inst)
     inst.no_wet_prefix = true
   end)
 
-  local originalOnLoad = inst.OnLoad
-
-  inst.OnLoad = function(inst, data)
-    originalOnLoad(inst, data)
-
+  inst:DoTaskInTime(0, function()
     if inst.components.named and inst.components.named.name then
       inst.no_wet_prefix = true
     end
-  end
+  end)
 
   inst:ListenForEvent("stopfollowing", function()
     inst.no_wet_prefix = false
@@ -162,15 +152,11 @@ end
 AddPrefabPostInit("kitcoon_nametag", kitcoonNametagPostInit)
 
 local function kitcoonPostInit(inst)
-  local originalOnLoad = inst.OnLoad
-
-  inst.OnLoad = function(inst, data)
-    originalOnLoad(inst, data)
-
+  inst:DoTaskInTime(0, function()
     if inst.components.named and inst.components.named.name then
       inst.no_wet_prefix = true
     end
-  end
+  end)
 end
 
 AddPrefabPostInit("kitcoon_forest", kitcoonPostInit)
