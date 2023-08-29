@@ -1,5 +1,6 @@
 local HoverText = require "widgets/hoverer"
 local OnUpdateOriginal = HoverText.OnUpdate or function() return "" end
+local insightEnabled = _G.KnownModIndex:IsModEnabled("workshop-2189004162")
 
 function HoverText:OnUpdate()
   OnUpdateOriginal(self)
@@ -21,7 +22,12 @@ function HoverText:OnUpdate()
         str = egsub(str, adjective .. " " .. name, ConstructAdjectivedName(lmb.target, name, grammaticalAdjective))
       end
 
-      self.text:SetString(str)
+      if insightEnabled then
+        self.text.string = str
+        self.text.inst.TextWidget:SetString(str)
+      else
+        self.text:SetString(str)
+      end
     end
   end
 end
