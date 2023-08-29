@@ -148,6 +148,40 @@ end
 
 AddPrefabPostInit("beefalo", beefaloPostInit)
 
+local function kitcoonNametagPostInit(inst)
+  local originalOnWrittenEnded = inst.components.writeable.onwritingended
+
+  inst.components.writeable:SetOnWritingEndedFn(function(inst)
+    inst.naming_target.no_wet_prefix = true
+
+    originalOnWrittenEnded(inst)
+  end)
+end
+
+AddPrefabPostInit("kitcoon_nametag", kitcoonNametagPostInit)
+
+local function kitcoonPostInit(inst)
+  local originalOnLoad = inst.OnLoad
+
+  inst.OnLoad = function(inst, data)
+    originalOnLoad(inst, data)
+
+    if inst.components.named and inst.components.named.name then
+      inst.no_wet_prefix = true
+    end
+  end
+end
+
+AddPrefabPostInit("kitcoon_forest", kitcoonPostInit)
+AddPrefabPostInit("kitcoon_savanna", kitcoonPostInit)
+AddPrefabPostInit("kitcoon_deciduous", kitcoonPostInit)
+AddPrefabPostInit("kitcoon_marsh", kitcoonPostInit)
+AddPrefabPostInit("kitcoon_grass", kitcoonPostInit)
+AddPrefabPostInit("kitcoon_rocky", kitcoonPostInit)
+AddPrefabPostInit("kitcoon_desert", kitcoonPostInit)
+AddPrefabPostInit("kitcoon_moon", kitcoonPostInit)
+AddPrefabPostInit("kitcoon_yot", kitcoonPostInit)
+
 local function unsetWetPrefix(inst)
   if inst.wet_prefix then inst.wet_prefix = nil end
 end
