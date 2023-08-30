@@ -92,7 +92,7 @@ end
 AddPrefabPostInit("blueprint", setBlueprintDisplayName)
 
 local function updateMooseGender(inst)
-  local name = inst.components.named.name
+  local name = inst.replica.named._name:value()
   inst.components.grammar:SetGender(name == STRINGS.NAMES.MOOSE1 and GENDER.FEMININE or GENDER.MASCULINE)
 end
 
@@ -102,18 +102,7 @@ local function moosePostInit(inst)
 
   inst:DoTaskInTime(0, function() updateMooseGender(inst) end)
 
-  for task, _ in pairs(inst.pendingtasks) do
-    if task.period == 5 then
-      local originalFn = task.fn
-
-      task.fn = function(inst)
-        originalFn(inst)
-        updateMooseGender(inst)
-      end
-
-      break
-    end
-  end
+  inst:ListenForEvent("namedirty", function() updateMooseGender(inst) end)
 end
 
 AddPrefabPostInit("moose", moosePostInit)
