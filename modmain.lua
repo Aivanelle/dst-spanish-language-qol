@@ -64,7 +64,7 @@ local subfmt = _G.subfmt
 
 local function setSpiceDisplayName(inst)
   inst.displaynamefn = function()
-    local spice = inst.components.edible and inst.components.edible.spice
+    local spice = inst.prefab:gsub(inst.nameoverride .. "_spice_", ""):upper()
     local upperNameOverride = inst.nameoverride:upper()
 
     return STRINGS.SPICESMOD[spice][upperNameOverride] or
@@ -92,8 +92,10 @@ end
 AddPrefabPostInit("blueprint", setBlueprintDisplayName)
 
 local function updateMooseGender(inst)
-  local name = inst.components.named.name
-  inst.components.grammar:SetGender(name == STRINGS.NAMES.MOOSE1 and GENDER.FEMININE or GENDER.MASCULINE)
+  local name = inst.replica.named and inst.replica.named._name:value()
+  if name and name ~= "" then
+    inst.components.grammar:SetGender(name == STRINGS.NAMES.MOOSE1 and GENDER.FEMININE or GENDER.MASCULINE)
+  end
 end
 
 local function moosePostInit(inst)
@@ -102,72 +104,34 @@ local function moosePostInit(inst)
 
   inst:DoTaskInTime(0, function() updateMooseGender(inst) end)
 
-  for task, _ in pairs(inst.pendingtasks) do
-    if task.period == 5 then
-      local originalFn = task.fn
-
-      task.fn = function(inst)
-        originalFn(inst)
-        updateMooseGender(inst)
-      end
-
-      break
-    end
-  end
+  inst:ListenForEvent("namedirty", function() updateMooseGender(inst) end)
 end
 
 AddPrefabPostInit("moose", moosePostInit)
 
-local function beefaloPostInit(inst)
-  local originalOnWrittenEnded = inst.components.writeable.onwritingended
-
-  inst.components.writeable:SetOnWritingEndedFn(function(inst)
-    originalOnWrittenEnded(inst)
-    inst.no_wet_prefix = true
-  end)
-
+local function namedCreaturePostInit(inst)
   inst:DoTaskInTime(0, function()
-    if inst.components.named and inst.components.named.name then
-      inst.no_wet_prefix = true
+    if inst.replica.named then
+      inst.no_wet_prefix = inst.replica.named._name:value() ~= ""
     end
   end)
 
-  inst:ListenForEvent("stopfollowing", function()
-    inst.no_wet_prefix = false
+  inst:ListenForEvent("namedirty", function()
+    inst.no_wet_prefix = inst.replica.named._name:value() ~= ""
   end)
 end
 
-AddPrefabPostInit("beefalo", beefaloPostInit)
+AddPrefabPostInit("beefalo", namedCreaturePostInit)
 
-local function kitcoonNametagPostInit(inst)
-  local originalOnWrittenEnded = inst.components.writeable.onwritingended
-
-  inst.components.writeable:SetOnWritingEndedFn(function(inst)
-    inst.naming_target.no_wet_prefix = true
-
-    originalOnWrittenEnded(inst)
-  end)
-end
-
-AddPrefabPostInit("kitcoon_nametag", kitcoonNametagPostInit)
-
-local function kitcoonPostInit(inst)
-  inst:DoTaskInTime(0, function()
-    if inst.components.named and inst.components.named.name then
-      inst.no_wet_prefix = true
-    end
-  end)
-end
-
-AddPrefabPostInit("kitcoon_forest", kitcoonPostInit)
-AddPrefabPostInit("kitcoon_savanna", kitcoonPostInit)
-AddPrefabPostInit("kitcoon_deciduous", kitcoonPostInit)
-AddPrefabPostInit("kitcoon_marsh", kitcoonPostInit)
-AddPrefabPostInit("kitcoon_grass", kitcoonPostInit)
-AddPrefabPostInit("kitcoon_rocky", kitcoonPostInit)
-AddPrefabPostInit("kitcoon_desert", kitcoonPostInit)
-AddPrefabPostInit("kitcoon_moon", kitcoonPostInit)
-AddPrefabPostInit("kitcoon_yot", kitcoonPostInit)
+AddPrefabPostInit("kitcoon_forest", namedCreaturePostInit)
+AddPrefabPostInit("kitcoon_savanna", namedCreaturePostInit)
+AddPrefabPostInit("kitcoon_deciduous", namedCreaturePostInit)
+AddPrefabPostInit("kitcoon_marsh", namedCreaturePostInit)
+AddPrefabPostInit("kitcoon_grass", namedCreaturePostInit)
+AddPrefabPostInit("kitcoon_rocky", namedCreaturePostInit)
+AddPrefabPostInit("kitcoon_desert", namedCreaturePostInit)
+AddPrefabPostInit("kitcoon_moon", namedCreaturePostInit)
+AddPrefabPostInit("kitcoon_yot", namedCreaturePostInit)
 
 local function unsetWetPrefix(inst)
   if inst.wet_prefix then inst.wet_prefix = nil end
