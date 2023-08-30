@@ -92,8 +92,10 @@ end
 AddPrefabPostInit("blueprint", setBlueprintDisplayName)
 
 local function updateMooseGender(inst)
-  local name = inst.replica.named._name:value()
-  inst.components.grammar:SetGender(name == STRINGS.NAMES.MOOSE1 and GENDER.FEMININE or GENDER.MASCULINE)
+  local name = inst.replica.named and inst.replica.named._name:value()
+  if name and name ~= "" then
+    inst.components.grammar:SetGender(name == STRINGS.NAMES.MOOSE1 and GENDER.FEMININE or GENDER.MASCULINE)
+  end
 end
 
 local function moosePostInit(inst)
@@ -107,56 +109,29 @@ end
 
 AddPrefabPostInit("moose", moosePostInit)
 
--- local function beefaloPostInit(inst)
---   local originalOnWrittenEnded = inst.components.writeable.onwritingended
+local function namedCreaturePostInit(inst)
+  inst:DoTaskInTime(0, function()
+    if inst.replica.named then
+      inst.no_wet_prefix = inst.replica.named._name:value() ~= ""
+    end
+  end)
 
---   inst.components.writeable:SetOnWritingEndedFn(function(inst)
---     originalOnWrittenEnded(inst)
---     inst.no_wet_prefix = true
---   end)
+  inst:ListenForEvent("namedirty", function()
+    inst.no_wet_prefix = inst.replica.named._name:value() ~= ""
+  end)
+end
 
---   inst:DoTaskInTime(0, function()
---     if inst.components.named and inst.components.named.name then
---       inst.no_wet_prefix = true
---     end
---   end)
+AddPrefabPostInit("beefalo", namedCreaturePostInit)
 
---   inst:ListenForEvent("stopfollowing", function()
---     inst.no_wet_prefix = false
---   end)
--- end
-
--- AddPrefabPostInit("beefalo", beefaloPostInit)
-
--- local function kitcoonNametagPostInit(inst)
---   local originalOnWrittenEnded = inst.components.writeable.onwritingended
-
---   inst.components.writeable:SetOnWritingEndedFn(function(inst)
---     inst.naming_target.no_wet_prefix = true
-
---     originalOnWrittenEnded(inst)
---   end)
--- end
-
--- AddPrefabPostInit("kitcoon_nametag", kitcoonNametagPostInit)
-
--- local function kitcoonPostInit(inst)
---   inst:DoTaskInTime(0, function()
---     if inst.components.named and inst.components.named.name then
---       inst.no_wet_prefix = true
---     end
---   end)
--- end
-
--- AddPrefabPostInit("kitcoon_forest", kitcoonPostInit)
--- AddPrefabPostInit("kitcoon_savanna", kitcoonPostInit)
--- AddPrefabPostInit("kitcoon_deciduous", kitcoonPostInit)
--- AddPrefabPostInit("kitcoon_marsh", kitcoonPostInit)
--- AddPrefabPostInit("kitcoon_grass", kitcoonPostInit)
--- AddPrefabPostInit("kitcoon_rocky", kitcoonPostInit)
--- AddPrefabPostInit("kitcoon_desert", kitcoonPostInit)
--- AddPrefabPostInit("kitcoon_moon", kitcoonPostInit)
--- AddPrefabPostInit("kitcoon_yot", kitcoonPostInit)
+AddPrefabPostInit("kitcoon_forest", namedCreaturePostInit)
+AddPrefabPostInit("kitcoon_savanna", namedCreaturePostInit)
+AddPrefabPostInit("kitcoon_deciduous", namedCreaturePostInit)
+AddPrefabPostInit("kitcoon_marsh", namedCreaturePostInit)
+AddPrefabPostInit("kitcoon_grass", namedCreaturePostInit)
+AddPrefabPostInit("kitcoon_rocky", namedCreaturePostInit)
+AddPrefabPostInit("kitcoon_desert", namedCreaturePostInit)
+AddPrefabPostInit("kitcoon_moon", namedCreaturePostInit)
+AddPrefabPostInit("kitcoon_yot", namedCreaturePostInit)
 
 local function unsetWetPrefix(inst)
   if inst.wet_prefix then inst.wet_prefix = nil end
