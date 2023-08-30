@@ -64,7 +64,7 @@ local subfmt = _G.subfmt
 
 local function setSpiceDisplayName(inst)
   inst.displaynamefn = function()
-    local spice = inst.components.edible and inst.components.edible.spice
+    local spice = inst.prefab:gsub(inst.nameoverride .. "_", ""):upper()
     local upperNameOverride = inst.nameoverride:upper()
 
     return STRINGS.SPICESMOD[spice][upperNameOverride] or
