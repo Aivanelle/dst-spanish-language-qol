@@ -50,6 +50,10 @@ function EntityScript:GetAdjectivedName()
     elseif self:HasOneOfTags(FUELTYPE) then
       prefabType = "FUEL"
     else
+      if self:HasOneOfTags({ "beefalo", "kitcoon" }) and (self.replica.named and self.replica.named._name:value() ~= "") then
+        return self.replica.named._name:value()
+      end
+
       prefabType = "GENERIC"
     end
 
