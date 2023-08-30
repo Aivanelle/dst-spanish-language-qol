@@ -118,56 +118,56 @@ end
 
 AddPrefabPostInit("moose", moosePostInit)
 
-local function beefaloPostInit(inst)
-  local originalOnWrittenEnded = inst.components.writeable.onwritingended
+-- local function beefaloPostInit(inst)
+--   local originalOnWrittenEnded = inst.components.writeable.onwritingended
 
-  inst.components.writeable:SetOnWritingEndedFn(function(inst)
-    originalOnWrittenEnded(inst)
-    inst.no_wet_prefix = true
-  end)
+--   inst.components.writeable:SetOnWritingEndedFn(function(inst)
+--     originalOnWrittenEnded(inst)
+--     inst.no_wet_prefix = true
+--   end)
 
-  inst:DoTaskInTime(0, function()
-    if inst.components.named and inst.components.named.name then
-      inst.no_wet_prefix = true
-    end
-  end)
+--   inst:DoTaskInTime(0, function()
+--     if inst.components.named and inst.components.named.name then
+--       inst.no_wet_prefix = true
+--     end
+--   end)
 
-  inst:ListenForEvent("stopfollowing", function()
-    inst.no_wet_prefix = false
-  end)
-end
+--   inst:ListenForEvent("stopfollowing", function()
+--     inst.no_wet_prefix = false
+--   end)
+-- end
 
-AddPrefabPostInit("beefalo", beefaloPostInit)
+-- AddPrefabPostInit("beefalo", beefaloPostInit)
 
-local function kitcoonNametagPostInit(inst)
-  local originalOnWrittenEnded = inst.components.writeable.onwritingended
+-- local function kitcoonNametagPostInit(inst)
+--   local originalOnWrittenEnded = inst.components.writeable.onwritingended
 
-  inst.components.writeable:SetOnWritingEndedFn(function(inst)
-    inst.naming_target.no_wet_prefix = true
+--   inst.components.writeable:SetOnWritingEndedFn(function(inst)
+--     inst.naming_target.no_wet_prefix = true
 
-    originalOnWrittenEnded(inst)
-  end)
-end
+--     originalOnWrittenEnded(inst)
+--   end)
+-- end
 
-AddPrefabPostInit("kitcoon_nametag", kitcoonNametagPostInit)
+-- AddPrefabPostInit("kitcoon_nametag", kitcoonNametagPostInit)
 
-local function kitcoonPostInit(inst)
-  inst:DoTaskInTime(0, function()
-    if inst.components.named and inst.components.named.name then
-      inst.no_wet_prefix = true
-    end
-  end)
-end
+-- local function kitcoonPostInit(inst)
+--   inst:DoTaskInTime(0, function()
+--     if inst.components.named and inst.components.named.name then
+--       inst.no_wet_prefix = true
+--     end
+--   end)
+-- end
 
-AddPrefabPostInit("kitcoon_forest", kitcoonPostInit)
-AddPrefabPostInit("kitcoon_savanna", kitcoonPostInit)
-AddPrefabPostInit("kitcoon_deciduous", kitcoonPostInit)
-AddPrefabPostInit("kitcoon_marsh", kitcoonPostInit)
-AddPrefabPostInit("kitcoon_grass", kitcoonPostInit)
-AddPrefabPostInit("kitcoon_rocky", kitcoonPostInit)
-AddPrefabPostInit("kitcoon_desert", kitcoonPostInit)
-AddPrefabPostInit("kitcoon_moon", kitcoonPostInit)
-AddPrefabPostInit("kitcoon_yot", kitcoonPostInit)
+-- AddPrefabPostInit("kitcoon_forest", kitcoonPostInit)
+-- AddPrefabPostInit("kitcoon_savanna", kitcoonPostInit)
+-- AddPrefabPostInit("kitcoon_deciduous", kitcoonPostInit)
+-- AddPrefabPostInit("kitcoon_marsh", kitcoonPostInit)
+-- AddPrefabPostInit("kitcoon_grass", kitcoonPostInit)
+-- AddPrefabPostInit("kitcoon_rocky", kitcoonPostInit)
+-- AddPrefabPostInit("kitcoon_desert", kitcoonPostInit)
+-- AddPrefabPostInit("kitcoon_moon", kitcoonPostInit)
+-- AddPrefabPostInit("kitcoon_yot", kitcoonPostInit)
 
 local function unsetWetPrefix(inst)
   if inst.wet_prefix then inst.wet_prefix = nil end
